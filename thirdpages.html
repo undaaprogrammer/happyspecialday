@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yay or Nay</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: white;
+      color: #222;
+      font-family: Arial, sans-serif;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 78%;
+      max-width: 500px;
+      text-align: left;
+    }
+
+    .question {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      border: 1px solid #ddd;
+      background: white;
+      color: #333;
+      border-radius: 20px;
+      padding: 8px 20px;
+
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    button:hover {
+      background: #222;
+      color: white;
+      border-color: #222;
+    }
+
+    #response {
+      margin-top: 22px;
+      font-size: 12px;
+      font-weight: 300;
+      color: #999;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="question">
+      So...<br>
+      Are you ready to begin?
+    </div>
+
+    <div class="buttons">
+      <button onclick="yay()">Yay!</button>
+      <button onclick="nay()">Nay</button>
+    </div>
+
+    <div id="response"></div>
+
+  </div>
+
+  <script>
+    function yay() {
+      window.location.href = "page3.html";
+    }
+
+    function nay() {
+      document.getElementById("response").textContent =
+        "Hmm... maybe next time :)";
+    }
+  </script>
+
+</body>
+</html>

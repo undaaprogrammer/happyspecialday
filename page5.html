@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>The Journey</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* =========================
+       BODY
+    ========================= */
+
+    body {
+      background: #fff;
+      color: #4b4350;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+
+    /* =========================
+       PASTEL ORNAMENTS
+    ========================= */
+
+    .decor {
+      position: fixed;
+      pointer-events: none;
+      user-select: none;
+
+      font-family: Arial, sans-serif;
+
+      opacity: .85;
+
+      animation: float 4s ease-in-out infinite;
+
+      z-index: 0;
+    }
+
+    .star1 {
+      top: 8%;
+      left: 9%;
+
+      color: #f3a8bf;
+      font-size: 21px;
+
+      animation-delay: 0s;
+    }
+
+    .star2 {
+      top: 13%;
+      right: 10%;
+
+      color: #b7a6e8;
+      font-size: 17px;
+
+      animation-delay: .8s;
+    }
+
+    .heart1 {
+      top: 43%;
+      left: 5%;
+
+      color: #8ecddd;
+      font-size: 20px;
+
+      animation-delay: 1.3s;
+    }
+
+    .heart2 {
+      bottom: 15%;
+      right: 8%;
+
+      color: #efc77e;
+      font-size: 22px;
+
+      animation-delay: .5s;
+    }
+
+    .flower1 {
+      top: 31%;
+      right: 5%;
+
+      color: #c0a8e5;
+      font-size: 15px;
+
+      animation-delay: 1.8s;
+    }
+
+    .flower2 {
+      bottom: 29%;
+      left: 6%;
+
+      color: #efa9c0;
+      font-size: 14px;
+
+      animation-delay: 1s;
+    }
+
+    .tiny1 {
+      top: 23%;
+      left: 18%;
+
+      color: #f0c980;
+      font-size: 9px;
+
+      animation-delay: .3s;
+    }
+
+    .tiny2 {
+      bottom: 8%;
+      left: 18%;
+
+      color: #9ed6df;
+      font-size: 10px;
+
+      animation-delay: 1.5s;
+    }
+
+
+    @keyframes float {
+
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-5px);
+      }
+
+    }
+
+
+    /* =========================
+       PAGE
+    ========================= */
+
+    .page {
+      position: relative;
+      z-index: 1;
+
+      width: min(90%, 480px);
+      margin: auto;
+      padding: 75px 0;
+    }
+
+
+    /* =========================
+       INTRO
+    ========================= */
+
+    .intro {
+      margin-bottom: 55px;
+
+      opacity: 0;
+
+      animation:
+        fadeUp 1s ease forwards;
+    }
+
+    .small {
+      font-size: 10px;
+      letter-spacing: 2px;
+
+      color: #b08fa1;
+
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: 23px;
+      font-weight: 300;
+      line-height: 1.5;
+
+      color: #4b4350;
+
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      line-height: 1.8;
+
+      color: #968b98;
+    }
+
+
+    /* =========================
+       TIMELINE
+    ========================= */
+
+    .timeline {
+      position: relative;
+
+      padding-left: 42px;
+    }
+
+
+    .timeline::before {
+      content: "";
+
+      position: absolute;
+
+      left: 10px;
+      top: 8px;
+      bottom: 8px;
+
+      width: 1px;
+
+      background: #e8e0e7;
+    }
+
+
+    /* =========================
+       ITEMS
+    ========================= */
+
+    .item {
+      position: relative;
+
+      margin-bottom: 42px;
+
+      opacity: 0;
+
+      animation:
+        fadeUp .8s ease forwards;
+    }
+
+    .item:nth-child(1) {
+      animation-delay: .4s;
+    }
+
+    .item:nth-child(2) {
+      animation-delay: .7s;
+    }
+
+    .item:nth-child(3) {
+      animation-delay: 1s;
+    }
+
+    .item:nth-child(4) {
+      animation-delay: 1.3s;
+    }
+
+
+    /* =========================
+       DOTS
+    ========================= */
+
+    .dot {
+      position: absolute;
+
+      left: -38px;
+      top: 5px;
+
+      width: 15px;
+      height: 15px;
+
+      border: 1px solid #d9bfd0;
+
+      border-radius: 50%;
+
+      background: #fff;
+
+      z-index: 2;
+
+      transition: .3s ease;
+    }
+
+
+    /* Different pastel dots */
+
+    .item:nth-child(1) .dot {
+      border-color: #efa9c0;
+      box-shadow: 0 0 0 3px #fff3f7;
+    }
+
+    .item:nth-child(2) .dot {
+      border-color: #c1b3e8;
+      box-shadow: 0 0 0 3px #f7f4ff;
+    }
+
+    .item:nth-child(3) .dot {
+      border-color: #9ed5df;
+      box-shadow: 0 0 0 3px #f2fcfd;
+    }
+
+    .item:nth-child(4) .dot {
+      border-color: #efd18d;
+      box-shadow: 0 0 0 3px #fffaf0;
+    }
+
+
+    /* =========================
+       CARDS
+    ========================= */
+
+    .card {
+      border: 1px solid #eadfe7;
+
+      background: #fff;
+
+      padding: 19px 20px;
+
+      transition:
+        .3s ease;
+    }
+
+
+    .unlocked .card {
+      cursor: pointer;
+    }
+
+
+    .unlocked .card:hover {
+      border-color: #e1b9ca;
+
+      transform: translateX(4px);
+
+      box-shadow:
+        0 5px 18px rgba(226, 188, 207, .15);
+    }
+
+
+    /* =========================
+       CARD CONTENT
+    ========================= */
+
+    .number {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+
+      color: #b9a4b1;
+
+      margin-bottom: 9px;
+    }
+
+
+    .title {
+      font-size: 15px;
+      font-weight: 300;
+
+      color: #514953;
+
+      margin-bottom: 7px;
+    }
+
+
+    .description {
+      font-size: 11px;
+      line-height: 1.7;
+
+      color: #958a96;
+    }
+
+
+    .status {
+      margin-top: 13px;
+
+      font-size: 9px;
+      letter-spacing: 1.5px;
+
+      text-transform: uppercase;
+    }
+
+
+    /* =========================
+       UNLOCKED CARD
+    ========================= */
+
+    .unlocked .status {
+      color: #d28fa9;
+    }
+
+
+    /* =========================
+       LOCKED CARDS
+    ========================= */
+
+    .locked .card {
+      background: #fcfafc;
+
+      border-color: #eee8ee;
+    }
+
+    .locked .title {
+      color: #b8b0b9;
+    }
+
+    .locked .description {
+      color: #c0b9c0;
+    }
+
+    .locked .status {
+      color: #c9c2ca;
+    }
+
+    .locked .dot {
+      border-color: #ddd7de;
+
+      box-shadow: none;
+    }
+
+
+    /* =========================
+       DIFFERENT CARD ACCENTS
+    ========================= */
+
+    .item:nth-child(1) .card {
+      border-left: 2px solid #efa9c0;
+    }
+
+    .item:nth-child(2) .card {
+      border-left: 2px solid #c8bae9;
+    }
+
+    .item:nth-child(3) .card {
+      border-left: 2px solid #a6d7df;
+    }
+
+    .item:nth-child(4) .card {
+      border-left: 2px solid #efd294;
+    }
+
+
+    /* =========================
+       CONTINUE
+    ========================= */
+
+    .continue {
+      text-align: center;
+
+      margin-top: 45px;
+
+      opacity: 0;
+
+      animation:
+        fadeUp 1s ease 1.8s forwards;
+    }
+
+    .continue p {
+      font-size: 11px;
+
+      color: #968b98;
+
+      margin-bottom: 14px;
+    }
+
+
+    .continue button {
+      border: none;
+
+      background: transparent;
+
+      border-bottom: 1px solid #d7a8ba;
+
+      padding: 9px 15px;
+
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 300;
+
+      cursor: pointer;
+
+      color: #8f6578;
+
+      transition: .3s ease;
+    }
+
+
+    .continue button:hover {
+      letter-spacing: 1px;
+
+      color: #d18da8;
+
+      border-color: #d18da8;
+    }
+
+
+    /* =========================
+       FADE UP
+    ========================= */
+
+    @keyframes fadeUp {
+
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 400px) {
+
+      .page {
+        padding: 60px 0;
+      }
+
+      h1 {
+        font-size: 21px;
+      }
+
+      .timeline {
+        padding-left: 36px;
+      }
+
+      .timeline::before {
+        left: 8px;
+      }
+
+      .dot {
+        left: -34px;
+      }
+
+      .star1 {
+        left: 5%;
+      }
+
+      .star2 {
+        right: 6%;
+      }
+
+      .heart1 {
+        left: 3%;
+      }
+
+      .heart2 {
+        right: 5%;
+      }
+
+      .flower1 {
+        right: 3%;
+      }
+
+      .flower2 {
+        left: 4%;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       PASTEL DECORATIONS
+  ========================= -->
+
+  <div class="decor star1">✦</div>
+  <div class="decor star2">✧</div>
+
+  <div class="decor heart1">♡</div>
+  <div class="decor heart2">♡</div>
+
+  <div class="decor flower1">✿</div>
+  <div class="decor flower2">✿</div>
+
+  <div class="decor tiny1">✦</div>
+  <div class="decor tiny2">✧</div>
+
+
+  <!-- =========================
+       MAIN
+  ========================= -->
+
+  <main class="page">
+
+
+    <!-- INTRO -->
+
+    <section class="intro">
+
+      <div class="small">
+        THE JOURNEY
+      </div>
+
+      <h1>
+        There are a few things<br>
+        waiting for you.
+      </h1>
+
+      <p class="subtitle">
+        Four little stops.<br>
+        One step at a time.
+      </p>
+
+    </section>
+
+
+    <!-- TIMELINE -->
+
+    <section class="timeline">
+
+
+      <!-- 01 UNLOCKED -->
+
+      <div class="item unlocked">
+
+        <span class="dot"></span>
+
+        <div
+          class="card"
+          onclick="goTo('candle.html')"
+        >
+
+          <div class="number">
+            01
+          </div>
+
+          <div class="title">
+            Something to Light
+          </div>
+
+          <div class="description">
+            A little light for the beginning of your journey.
+          </div>
+
+          <div class="status">
+            → Open
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- 02 LOCKED -->
+
+      <div class="item locked">
+
+        <span class="dot"></span>
+
+        <div class="card">
+
+          <div class="number">
+            02
+          </div>
+
+          <div class="title">
+            Something to Listen
+          </div>
+
+          <div class="description">
+            A collection of songs waiting somewhere ahead.
+          </div>
+
+          <div class="status">
+            🔒 Locked
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- 03 LOCKED -->
+
+      <div class="item locked">
+
+        <span class="dot"></span>
+
+        <div class="card">
+
+          <div class="number">
+            03
+          </div>
+
+          <div class="title">
+            Something to Keep
+          </div>
+
+          <div class="description">
+            Something made from a little piece of a memory.
+          </div>
+
+          <div class="status">
+            🔒 Locked
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- 04 LOCKED -->
+
+      <div class="item locked">
+
+        <span class="dot"></span>
+
+        <div class="card">
+
+          <div class="number">
+            04
+          </div>
+
+          <div class="title">
+            Something to Read
+          </div>
+
+          <div class="description">
+            Perhaps the most personal one of them all.
+          </div>
+
+          <div class="status">
+            🔒 Locked
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+    <!-- CONTINUE -->
+
+    <section class="continue">
+
+      <p>
+        Your next stop is waiting.
+      </p>
+
+      <button onclick="goTo('candle.html')">
+        Begin →
+      </button>
+
+    </section>
+
+
+  </main>
+
+
+  <script>
+
+    function goTo(page) {
+      window.location.href = page;
+    }
+
+  </script>
+
+</body>
+</html>

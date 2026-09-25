@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>The Rules</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+
+    body {
+      background: #000;
+      color: #fff;
+
+      font-family:
+        "Courier New",
+        monospace;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+
+      cursor: pointer;
+    }
+
+
+    /* =================================
+       SCANLINES
+    ================================= */
+
+    body::before {
+      content: "";
+
+      position: fixed;
+      inset: 0;
+
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0px,
+          transparent 4px,
+          rgba(255, 255, 255, 0.025) 5px
+        );
+
+      pointer-events: none;
+
+      z-index: 50;
+    }
+
+
+    /* =================================
+       VIGNETTE
+    ================================= */
+
+    body::after {
+      content: "";
+
+      position: fixed;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle,
+          transparent 45%,
+          rgba(0, 0, 0, 0.7) 100%
+        );
+
+      pointer-events: none;
+
+      z-index: 49;
+    }
+
+
+    /* =================================
+       PARTICLES
+    ================================= */
+
+    .particles {
+      position: fixed;
+      inset: 0;
+
+      pointer-events: none;
+
+      overflow: hidden;
+
+      z-index: 2;
+    }
+
+
+    .particle {
+      position: absolute;
+
+      width: 2px;
+      height: 2px;
+
+      background: #fff;
+
+      opacity: 0;
+
+      animation:
+        floatParticle linear infinite;
+    }
+
+
+    @keyframes floatParticle {
+
+      0% {
+        transform:
+          translateY(105vh);
+
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 0.25;
+      }
+
+      80% {
+        opacity: 0.08;
+      }
+
+      100% {
+        transform:
+          translateY(-10vh);
+
+        opacity: 0;
+      }
+
+    }
+
+
+    /* =================================
+       DOOR
+    ================================= */
+
+    .door {
+      position: fixed;
+      inset: 0;
+
+      display: flex;
+
+      z-index: 40;
+
+      pointer-events: none;
+    }
+
+
+    .door-panel {
+      width: 50%;
+      height: 100%;
+
+      background: #000;
+
+      position: relative;
+
+      transition:
+        transform 1.8s
+        cubic-bezier(
+          0.77,
+          0,
+          0.18,
+          1
+        );
+    }
+
+
+    .door-left {
+      border-right:
+        1px solid #222;
+
+      transform:
+        translateX(0);
+    }
+
+
+    .door-right {
+      border-left:
+        1px solid #222;
+
+      transform:
+        translateX(0);
+    }
+
+
+    /* =================================
+       DOOR CENTER LINE
+    ================================= */
+
+    .door-center {
+      position: absolute;
+
+      top: 50%;
+      left: 50%;
+
+      transform:
+        translate(-50%, -50%);
+
+      width: 1px;
+      height: 90px;
+
+      background: #333;
+
+      z-index: 45;
+
+      transition:
+        opacity 0.5s ease;
+    }
+
+
+    .door-label {
+      position: absolute;
+
+      top: 50%;
+      left: 50%;
+
+      transform:
+        translate(-50%, -50%);
+
+      color: #666;
+
+      font-size: 8px;
+
+      letter-spacing: 3px;
+
+      white-space: nowrap;
+
+      z-index: 46;
+
+      transition:
+        opacity 0.5s ease;
+    }
+
+
+    /* =================================
+       DOOR OPEN STATE
+    ================================= */
+
+    body.open .door-left {
+      transform:
+        translateX(-100%);
+    }
+
+
+    body.open .door-right {
+      transform:
+        translateX(100%);
+    }
+
+
+    body.open .door-center,
+    body.open .door-label {
+      opacity: 0;
+    }
+
+
+    /* =================================
+       MAIN CONTENT
+    ================================= */
+
+    .container {
+      width: 82%;
+      max-width: 560px;
+
+      position: relative;
+
+      z-index: 10;
+    }
+
+
+    /* =================================
+       STATUS
+    ================================= */
+
+    .status {
+      font-size: 9px;
+
+      letter-spacing: 3px;
+
+      color: #666;
+
+      margin-bottom: 25px;
+
+      opacity: 0;
+
+      transition:
+        opacity 0.8s ease;
+    }
+
+
+    .status::before {
+      content: "● ";
+
+      color: #fff;
+
+      animation:
+        blink 1s infinite;
+    }
+
+
+    @keyframes blink {
+
+      0%,
+      50% {
+        opacity: 1;
+      }
+
+      51%,
+      100% {
+        opacity: 0.2;
+      }
+
+    }
+
+
+    /* =================================
+       TITLE
+    ================================= */
+
+    .title {
+      font-size: 17px;
+
+      line-height: 1.8;
+
+      letter-spacing: 0.5px;
+
+      color: #fff;
+
+      margin-bottom: 25px;
+
+      opacity: 0;
+
+      transform:
+        translateY(8px);
+
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+    }
+
+
+    /* =================================
+       RULES
+    ================================= */
+
+    .rules {
+      font-size: 13px;
+
+      line-height: 2;
+
+      color: #aaa;
+    }
+
+
+    .rule {
+      opacity: 0;
+
+      transform:
+        translateY(8px);
+
+      transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+    }
+
+
+    .rule.show {
+      opacity: 1;
+
+      transform:
+        translateY(0);
+    }
+
+
+    /* =================================
+       NOTE
+    ================================= */
+
+    .note {
+      margin-top: 22px;
+
+      font-size: 11px;
+
+      font-style: italic;
+
+      color: #666;
+
+      opacity: 0;
+
+      transition:
+        opacity 0.6s ease;
+    }
+
+
+    .note.show {
+      opacity: 1;
+    }
+
+
+    /* =================================
+       CONTINUE
+    ================================= */
+
+    #continue {
+      margin-top: 30px;
+
+      font-size: 9px;
+
+      letter-spacing: 2px;
+
+      color: #555;
+
+      opacity: 0;
+
+      transition:
+        opacity 0.8s ease;
+    }
+
+
+    #continue.show {
+      opacity: 1;
+
+      animation:
+        continueBlink 1.5s
+        infinite;
+    }
+
+
+    @keyframes continueBlink {
+
+      0%,
+      100% {
+        opacity: 0.35;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+    }
+
+
+    /* =================================
+       CONTENT REVEAL
+    ================================= */
+
+    body.open .status {
+      opacity: 1;
+
+      transition-delay: 0.8s;
+    }
+
+
+    body.open .title {
+      opacity: 1;
+
+      transform:
+        translateY(0);
+
+      transition-delay: 1s;
+    }
+
+
+    /* =================================
+       GLITCH
+    ================================= */
+
+    .glitch {
+      animation:
+        glitch 0.2s linear;
+    }
+
+
+    @keyframes glitch {
+
+      0% {
+        transform:
+          translate(0);
+      }
+
+      25% {
+        transform:
+          translate(-2px, 1px);
+      }
+
+      50% {
+        transform:
+          translate(2px, -1px);
+      }
+
+      75% {
+        transform:
+          translate(-1px, -1px);
+      }
+
+      100% {
+        transform:
+          translate(0);
+      }
+
+    }
+
+
+    /* =================================
+       MOBILE
+    ================================= */
+
+    @media (max-width: 600px) {
+
+      .container {
+        width: 82%;
+      }
+
+
+      .title {
+        font-size: 15px;
+      }
+
+
+      .rules {
+        font-size: 12px;
+
+        line-height: 2;
+      }
+
+
+      .door-label {
+        font-size: 7px;
+
+        letter-spacing: 2px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =================================
+       PARTICLES
+  ================================= -->
+
+  <div
+    class="particles"
+    id="particles">
+  </div>
+
+
+  <!-- =================================
+       DOOR
+  ================================= -->
+
+  <div class="door">
+
+    <div
+      class="door-panel door-left">
+    </div>
+
+
+    <div
+      class="door-panel door-right">
+    </div>
+
+
+    <div
+      class="door-center">
+    </div>
+
+
+    <div
+      class="door-label">
+
+      OPENING...
+
+    </div>
+
+  </div>
+
+
+  <!-- =================================
+       MAIN CONTENT
+  ================================= -->
+
+  <div class="container">
+
+
+    <div class="status">
+      SYSTEM ONLINE
+    </div>
+
+
+    <div class="title">
+      Before we begin...
+    </div>
+
+
+    <div class="rules">
+
+
+      <div class="rule">
+        01. Take your time.
+      </div>
+
+
+      <div class="rule">
+        02. Don't skip anything.
+      </div>
+
+
+      <div class="rule">
+        03. Read everything carefully.
+      </div>
+
+
+      <div class="rule">
+        04. Most importantly, enjoy the journey.
+      </div>
+
+
+    </div>
+
+
+    <div
+      class="note"
+      id="note">
+
+      That's it. No cheating :)
+
+    </div>
+
+
+    <div id="continue">
+      TAP ANYWHERE TO CONTINUE
+    </div>
+
+
+  </div>
+
+
+  <script>
+
+
+    /* =================================
+       ELEMENTS
+    ================================= */
+
+    const rules =
+      document.querySelectorAll(
+        ".rule"
+      );
+
+
+    const note =
+      document.getElementById(
+        "note"
+      );
+
+
+    const continueText =
+      document.getElementById(
+        "continue"
+      );
+
+
+    let current = 0;
+
+    let finished = false;
+
+
+    /* =================================
+       AUDIO
+    ================================= */
+
+    let audioContext = null;
+
+
+    function enableAudio() {
+
+      if (!audioContext) {
+
+        audioContext =
+          new (
+            window.AudioContext ||
+            window.webkitAudioContext
+          )();
+
+      }
+
+
+      if (
+        audioContext.state ===
+        "suspended"
+      ) {
+
+        audioContext.resume();
+
+      }
+
+    }
+
+
+    document.addEventListener(
+      "click",
+      enableAudio,
+      { once: true }
+    );
+
+
+    document.addEventListener(
+      "touchstart",
+      enableAudio,
+      { once: true }
+    );
+
+
+    /* =================================
+       DOOR SOUND
+    ================================= */
+
+    function playDoorSound() {
+
+      if (!audioContext) return;
+
+
+      const oscillator =
+        audioContext.createOscillator();
+
+
+      const gain =
+        audioContext.createGain();
+
+
+      oscillator.type =
+        "sine";
+
+
+      oscillator.frequency.setValueAtTime(
+        80,
+        audioContext.currentTime
+      );
+
+
+      oscillator.frequency.exponentialRampToValueAtTime(
+        180,
+        audioContext.currentTime + 1.4
+      );
+
+
+      gain.gain.setValueAtTime(
+        0.001,
+        audioContext.currentTime
+      );
+
+
+      gain.gain.linearRampToValueAtTime(
+        0.06,
+        audioContext.currentTime + 0.3
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + 1.5
+      );
+
+
+      oscillator.connect(gain);
+
+      gain.connect(
+        audioContext.destination
+      );
+
+
+      oscillator.start();
+
+
+      oscillator.stop(
+        audioContext.currentTime + 1.6
+      );
+
+    }
+
+
+    /* =================================
+       SMALL CLICK SOUND
+    ================================= */
+
+    function playClickSound() {
+
+      if (!audioContext) return;
+
+
+      const oscillator =
+        audioContext.createOscillator();
+
+
+      const gain =
+        audioContext.createGain();
+
+
+      oscillator.type =
+        "square";
+
+
+      oscillator.frequency.value =
+        550;
+
+
+      gain.gain.setValueAtTime(
+        0.018,
+        audioContext.currentTime
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.001,
+
+        audioContext.currentTime +
+        0.05
+      );
+
+
+      oscillator.connect(gain);
+
+      gain.connect(
+        audioContext.destination
+      );
+
+
+      oscillator.start();
+
+
+      oscillator.stop(
+        audioContext.currentTime +
+        0.05
+      );
+
+    }
+
+
+    /* =================================
+       OPEN DOOR
+    ================================= */
+
+    function openDoor() {
+
+      enableAudio();
+
+
+      document.body.classList.add(
+        "open"
+      );
+
+
+      playDoorSound();
+
+
+      /*
+        Rules mulai setelah
+        pintu benar-benar terbuka.
+      */
+
+      setTimeout(() => {
+
+        showRule();
+
+      }, 2400);
+
+    }
+
+
+    /* =================================
+       SHOW RULES
+    ================================= */
+
+    function showRule() {
+
+      if (
+        current <
+        rules.length
+      ) {
+
+
+        rules[
+          current
+        ].classList.add(
+          "show"
+        );
+
+
+        playClickSound();
+
+
+        current++;
+
+
+        setTimeout(
+          showRule,
+          1000
+        );
+
+
+      } else {
+
+
+        setTimeout(() => {
+
+          note.classList.add(
+            "show"
+          );
+
+
+          setTimeout(() => {
+
+            continueText.classList.add(
+              "show"
+            );
+
+
+            finished = true;
+
+          }, 700);
+
+
+        }, 500);
+
+      }
+
+    }
+
+
+    /* =================================
+       NEXT PAGE
+    ================================= */
+
+    function nextPage() {
+
+      if (!finished) return;
+
+
+      playClickSound();
+
+
+      document.body.classList.add(
+        "glitch"
+      );
+
+
+      setTimeout(() => {
+
+        window.location.href =
+          "page4.html";
+
+      }, 250);
+
+    }
+
+
+    document.body.addEventListener(
+      "click",
+      nextPage
+    );
+
+
+    /* =================================
+       PARTICLES
+    ================================= */
+
+    function createParticles() {
+
+      const container =
+        document.getElementById(
+          "particles"
+        );
+
+
+      for (
+        let i = 0;
+        i < 25;
+        i++
+      ) {
+
+
+        const particle =
+          document.createElement(
+            "div"
+          );
+
+
+        particle.classList.add(
+          "particle"
+        );
+
+
+        particle.style.left =
+          Math.random() * 100 +
+          "%";
+
+
+        particle.style.animationDuration =
+          5 +
+          Math.random() * 10 +
+          "s";
+
+
+        particle.style.animationDelay =
+          Math.random() * 8 +
+          "s";
+
+
+        container.appendChild(
+          particle
+        );
+
+      }
+
+    }
+
+
+    /* =================================
+       START
+    ================================= */
+
+    createParticles();
+
+
+    /*
+      Pintu terbuka otomatis
+      setelah 1 detik.
+    */
+
+    setTimeout(
+      openDoor,
+      1000
+    );
+
+
+  </script>
+
+</body>
+</html>

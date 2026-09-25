@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Little Games ♡</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,
+body{
+  min-height:100%;
+}
+
+body{
+  overflow-x:hidden;
+
+  background:
+    radial-gradient(circle at 10% 10%,rgba(247,184,201,.45),transparent 25%),
+    radial-gradient(circle at 90% 15%,rgba(203,188,245,.4),transparent 25%),
+    radial-gradient(circle at 20% 90%,rgba(169,223,207,.4),transparent 25%),
+    radial-gradient(circle at 90% 85%,rgba(169,220,239,.35),transparent 25%),
+    #fffaf2;
+
+  color:#62596b;
+
+  font-family:"Quicksand",sans-serif;
+
+  animation:pageIn .9s ease both;
+}
+
+@keyframes pageIn{
+  from{
+    opacity:0;
+  }
+
+  to{
+    opacity:1;
+  }
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.blob{
+  position:fixed;
+  border-radius:50%;
+
+  pointer-events:none;
+
+  z-index:0;
+
+  filter:blur(2px);
+
+  animation:blobMove 8s ease-in-out infinite;
+}
+
+.blob1{
+  width:150px;
+  height:150px;
+
+  background:#f7b8c9;
+
+  top:-55px;
+  left:-55px;
+
+  opacity:.42;
+}
+
+.blob2{
+  width:180px;
+  height:180px;
+
+  background:#cbbcf5;
+
+  top:30%;
+  right:-90px;
+
+  opacity:.4;
+
+  animation-delay:-3s;
+}
+
+.blob3{
+  width:130px;
+  height:130px;
+
+  background:#a9dfcf;
+
+  bottom:-50px;
+  left:10%;
+
+  opacity:.42;
+
+  animation-delay:-5s;
+}
+
+.blob4{
+  width:100px;
+  height:100px;
+
+  background:#f8dfa0;
+
+  bottom:20%;
+  right:8%;
+
+  opacity:.42;
+
+  animation-delay:-1.5s;
+}
+
+@keyframes blobMove{
+
+  0%,100%{
+    transform:translate(0,0) scale(1);
+  }
+
+  50%{
+    transform:translate(12px,-14px) scale(1.06);
+  }
+}
+
+
+/* =========================
+   SPARKLES
+========================= */
+
+.sparkle{
+  position:fixed;
+
+  font-size:18px;
+
+  opacity:.45;
+
+  pointer-events:none;
+
+  z-index:1;
+
+  animation:
+    sparkleFloat 4s ease-in-out infinite,
+    sparkleBlink 3s ease-in-out infinite;
+}
+
+.s1{
+  top:12%;
+  left:13%;
+}
+
+.s2{
+  top:20%;
+  right:14%;
+
+  animation-delay:1s;
+}
+
+.s3{
+  bottom:18%;
+  left:18%;
+
+  animation-delay:2s;
+}
+
+.s4{
+  bottom:10%;
+  right:20%;
+
+  animation-delay:1.5s;
+}
+
+@keyframes sparkleFloat{
+
+  0%,100%{
+    transform:translateY(0) rotate(0);
+  }
+
+  50%{
+    transform:translateY(-9px) rotate(10deg);
+  }
+}
+
+@keyframes sparkleBlink{
+
+  0%,100%{
+    opacity:.25;
+  }
+
+  50%{
+    opacity:.75;
+  }
+}
+
+
+/* =========================
+   GAME WRAPPER
+========================= */
+
+.game{
+  position:relative;
+
+  z-index:2;
+
+  width:min(94vw,520px);
+
+  margin:0 auto;
+
+  padding:30px 0 35px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  text-align:center;
+
+  margin-bottom:20px;
+
+  animation:
+    headerEnter .8s
+    cubic-bezier(.22,1,.36,1)
+    both;
+}
+
+@keyframes headerEnter{
+
+  from{
+    opacity:0;
+    transform:translateY(14px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.header .mini{
+
+  font-size:9px;
+
+  font-weight:600;
+
+  letter-spacing:3px;
+
+  text-transform:uppercase;
+
+  color:#9b91a0;
+
+  margin-bottom:5px;
+}
+
+.header h1{
+
+  font-family:"Baloo 2",sans-serif;
+
+  font-size:32px;
+
+  line-height:1;
+
+  font-weight:600;
+
+  letter-spacing:-.5px;
+
+  color:#62596b;
+}
+
+.header p{
+
+  margin-top:8px;
+
+  font-size:12px;
+
+  font-weight:500;
+
+  color:#9b91a0;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:8px;
+
+  margin-bottom:12px;
+}
+
+.stat{
+
+  position:relative;
+
+  overflow:hidden;
+
+  padding:10px 5px;
+
+  text-align:center;
+
+  border-radius:17px;
+
+  background:
+    rgba(255,255,255,.72);
+
+  border:
+    1px solid
+    rgba(255,255,255,.9);
+
+  box-shadow:
+    0 5px 18px
+    rgba(125,105,115,.08);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.stat::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:35px;
+  height:35px;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.5);
+
+  top:-18px;
+  right:-12px;
+}
+
+.stat:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 8px 20px
+    rgba(125,105,115,.11);
+}
+
+.stat-label{
+
+  font-size:8px;
+
+  font-weight:600;
+
+  letter-spacing:1.3px;
+
+  text-transform:uppercase;
+
+  color:#9b91a0;
+
+  margin-bottom:3px;
+}
+
+.stat-value{
+
+  font-family:"Baloo 2",sans-serif;
+
+  font-size:19px;
+
+  line-height:1;
+
+  font-weight:600;
+
+  color:#62596b;
+}
+
+
+/* =========================
+   ARENA
+========================= */
+
+.arena{
+
+  position:relative;
+
+  width:100%;
+
+  height:min(110vw,470px);
+
+  min-height:340px;
+
+  overflow:hidden;
+
+  border-radius:30px;
+
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(247,184,201,.4),
+      transparent 22%
+    ),
+    radial-gradient(
+      circle at 80% 25%,
+      rgba(203,188,245,.38),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 30% 85%,
+      rgba(169,223,207,.42),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(169,220,239,.35),
+      transparent 22%
+    ),
+    rgba(255,255,255,.68);
+
+  border:
+    2px solid
+    rgba(255,255,255,.9);
+
+  box-shadow:
+    0 15px 35px
+    rgba(125,105,115,.12),
+
+    inset 0 0 30px
+    rgba(255,255,255,.5);
+
+  animation:
+    arenaEnter .9s
+    cubic-bezier(.22,1,.36,1)
+    .15s both;
+}
+
+@keyframes arenaEnter{
+
+  from{
+    opacity:0;
+    transform:scale(.97);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+.arena::before,
+.arena::after{
+
+  content:"";
+
+  position:absolute;
+
+  border-radius:50%;
+
+  pointer-events:none;
+
+  animation:
+    arenaBubble 6s
+    ease-in-out
+    infinite;
+}
+
+.arena::before{
+
+  width:110px;
+  height:110px;
+
+  background:
+    rgba(247,184,201,.16);
+
+  top:20px;
+  right:25px;
+}
+
+.arena::after{
+
+  width:80px;
+  height:80px;
+
+  background:
+    rgba(169,223,207,.18);
+
+  bottom:25px;
+  left:20px;
+
+  animation-delay:-3s;
+}
+
+@keyframes arenaBubble{
+
+  0%,100%{
+    transform:translate(0,0);
+  }
+
+  50%{
+    transform:translate(8px,-8px);
+  }
+}
+
+
+/* =========================
+   CAT
+========================= */
+
+.cat{
+
+  position:absolute;
+
+  width:70px;
+  height:70px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  user-select:none;
+  -webkit-user-select:none;
+
+  z-index:5;
+
+  filter:
+    drop-shadow(
+      0 8px 5px
+      rgba(125,105,115,.16)
+    );
+
+  transition:
+    left .15s ease,
+    top .15s ease,
+    transform .1s ease;
+}
+
+.cat img{
+
+  display:block;
+
+  width:58px;
+  height:58px;
+
+  max-width:100%;
+  max-height:100%;
+
+  object-fit:contain;
+
+  pointer-events:none;
+
+  animation:
+    catIdle 2.2s
+    ease-in-out
+    infinite;
+}
+
+@keyframes catIdle{
+
+  0%,100%{
+    transform:translateY(0) rotate(0);
+  }
+
+  50%{
+    transform:translateY(-4px) rotate(2deg);
+  }
+}
+
+.cat.hidden{
+  display:none;
+}
+
+.cat.pop{
+
+  animation:
+    catPop .22s
+    cubic-bezier(.34,1.56,.64,1);
+}
+
+.cat.pop img{
+
+  animation:none;
+}
+
+@keyframes catPop{
+
+  0%{
+    transform:scale(.7);
+  }
+
+  65%{
+    transform:scale(1.15);
+  }
+
+  100%{
+    transform:scale(1);
+  }
+}
+
+.cat:active{
+
+  transform:scale(.82);
+}
+
+
+/* =========================
+   + SCORE
+========================= */
+
+.plus{
+
+  position:absolute;
+
+  font-family:"Baloo 2",sans-serif;
+
+  font-size:17px;
+
+  font-weight:600;
+
+  color:#d9829c;
+
+  pointer-events:none;
+
+  z-index:10;
+
+  animation:
+    plusUp .7s
+    cubic-bezier(.22,1,.36,1)
+    forwards;
+}
+
+@keyframes plusUp{
+
+  0%{
+    opacity:0;
+
+    transform:
+      translateY(5px)
+      scale(.7)
+      rotate(-5deg);
+  }
+
+  20%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:0;
+
+    transform:
+      translateY(-38px)
+      scale(1.08)
+      rotate(5deg);
+  }
+}
+
+
+/* =========================
+   CLICK SPARKLES
+========================= */
+
+.hit-sparkle{
+
+  position:absolute;
+
+  z-index:11;
+
+  pointer-events:none;
+
+  font-size:13px;
+
+  color:#c69bb0;
+
+  animation:
+    hitSparkle .6s
+    ease-out
+    forwards;
+}
+
+@keyframes hitSparkle{
+
+  0%{
+    opacity:0;
+
+    transform:
+      translate(0,0)
+      scale(.4)
+      rotate(0);
+  }
+
+  30%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:0;
+
+    transform:
+      translate(
+        var(--x),
+        var(--y)
+      )
+      scale(.8)
+      rotate(100deg);
+  }
+}
+
+
+/* =========================
+   FLASH
+========================= */
+
+.flash{
+
+  animation:
+    flash .2s ease;
+}
+
+@keyframes flash{
+
+  0%,100%{
+    box-shadow:
+      0 15px 35px
+      rgba(125,105,115,.12),
+
+      inset 0 0 30px
+      rgba(255,255,255,.5);
+  }
+
+  50%{
+    box-shadow:
+      0 0 0 4px
+      rgba(247,184,201,.25),
+
+      0 15px 35px
+      rgba(125,105,115,.12),
+
+      inset 0 0 30px
+      rgba(255,255,255,.5);
+  }
+}
+
+
+/* =========================
+   OVERLAY
+========================= */
+
+.overlay{
+
+  position:absolute;
+
+  inset:0;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  padding:25px;
+
+  background:
+    rgba(255,250,242,.72);
+
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+
+  z-index:20;
+
+  animation:
+    overlayIn .55s
+    ease both;
+}
+
+@keyframes overlayIn{
+
+  from{
+    opacity:0;
+  }
+
+  to{
+    opacity:1;
+  }
+}
+
+.overlay.hidden{
+  display:none;
+}
+
+
+/* =========================
+   PANEL
+========================= */
+
+.panel{
+
+  position:relative;
+
+  width:min(100%,360px);
+
+  padding:30px 24px;
+
+  text-align:center;
+
+  border-radius:30px;
+
+  background:
+    rgba(255,255,255,.86);
+
+  border:
+    1px solid
+    rgba(255,255,255,.95);
+
+  box-shadow:
+    0 15px 40px
+    rgba(125,105,115,.13);
+
+  animation:
+    panelPop .65s
+    cubic-bezier(.34,1.56,.64,1)
+    both;
+}
+
+@keyframes panelPop{
+
+  from{
+    opacity:0;
+
+    transform:
+      scale(.86)
+      translateY(10px);
+  }
+
+  to{
+    opacity:1;
+
+    transform:
+      scale(1)
+      translateY(0);
+  }
+}
+
+
+/* =========================
+   START CAT
+========================= */
+
+.start-cat{
+
+  width:76px;
+  height:76px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  margin:0 auto 10px;
+
+  animation:
+    startCatFloat 3s
+    ease-in-out
+    infinite;
+}
+
+.start-cat img{
+
+  display:block;
+
+  width:70px;
+  height:70px;
+
+  object-fit:contain;
+}
+
+@keyframes startCatFloat{
+
+  0%,100%{
+    transform:translateY(0) rotate(-2deg);
+  }
+
+  50%{
+    transform:translateY(-6px) rotate(2deg);
+  }
+}
+
+
+/* =========================
+   PANEL TEXT
+========================= */
+
+.panel h2{
+
+  font-family:"Baloo 2",sans-serif;
+
+  font-size:25px;
+
+  line-height:1;
+
+  font-weight:600;
+
+  margin-bottom:8px;
+}
+
+.panel p{
+
+  font-size:12px;
+
+  line-height:1.7;
+
+  font-weight:500;
+
+  color:#9b91a0;
+
+  margin-bottom:20px;
+}
+
+
+/* =========================
+   RESULT
+========================= */
+
+.result-score{
+
+  margin:16px 0 22px;
+}
+
+.result-score .number{
+
+  display:block;
+
+  font-family:"Baloo 2",sans-serif;
+
+  font-size:52px;
+
+  line-height:.9;
+
+  font-weight:600;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d9829c,
+      #9e8bd1
+    );
+
+  -webkit-background-clip:text;
+
+  background-clip:text;
+
+  color:transparent;
+
+  animation:
+    scorePop .6s
+    cubic-bezier(.34,1.56,.64,1);
+}
+
+@keyframes scorePop{
+
+  from{
+    transform:scale(.5);
+    opacity:0;
+  }
+
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+.result-score .label{
+
+  display:block;
+
+  margin-top:8px;
+
+  font-size:9px;
+
+  font-weight:600;
+
+  letter-spacing:2px;
+
+  text-transform:uppercase;
+
+  color:#9b91a0;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+button{
+
+  outline:0;
+
+  font-family:"Quicksand",sans-serif;
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+.main-btn{
+
+  position:relative;
+
+  overflow:hidden;
+
+  border:0;
+
+  min-height:44px;
+
+  padding:12px 23px;
+
+  border-radius:999px;
+
+  font-size:12px;
+
+  font-weight:600;
+
+  color:#62596b;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f7b8c9,
+      #cbbcf5
+    );
+
+  box-shadow:
+    0 7px 16px
+    rgba(125,105,115,.14);
+
+  cursor:pointer;
+}
+
+.main-btn::before{
+
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  left:-100%;
+
+  width:55%;
+  height:100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.45),
+      transparent
+    );
+
+  transform:skewX(-20deg);
+
+  animation:
+    buttonShine 3.5s
+    ease-in-out
+    infinite;
+}
+
+@keyframes buttonShine{
+
+  0%,55%{
+    left:-100%;
+  }
+
+  75%,100%{
+    left:140%;
+  }
+}
+
+.main-btn:hover{
+
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 11px 22px
+    rgba(125,105,115,.18);
+}
+
+.main-btn:active{
+
+  transform:scale(.94);
+}
+
+.next-btn{
+
+  background:
+    linear-gradient(
+      135deg,
+      #a9dfcf,
+      #a9dcef
+    );
+}
+
+.result-buttons{
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  gap:9px;
+
+  flex-wrap:wrap;
+}
+
+
+/* =========================
+   HINT
+========================= */
+
+.hint{
+
+  text-align:center;
+
+  margin-top:13px;
+
+  font-size:10px;
+
+  font-weight:500;
+
+  letter-spacing:.5px;
+
+  color:#9b91a0;
+
+  animation:
+    hintFloat 3s
+    ease-in-out
+    infinite;
+}
+
+@keyframes hintFloat{
+
+  0%,100%{
+    opacity:.7;
+  }
+
+  50%{
+    opacity:1;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:400px){
+
+  .game{
+    padding-top:24px;
+  }
+
+  .header h1{
+    font-size:29px;
+  }
+
+  .arena{
+    height:100vw;
+    min-height:330px;
+  }
+
+  .cat{
+    width:64px;
+    height:64px;
+  }
+
+  .cat img{
+    width:53px;
+    height:53px;
+  }
+
+  .start-cat{
+    width:70px;
+    height:70px;
+  }
+
+  .start-cat img{
+    width:64px;
+    height:64px;
+  }
+
+}
+
+@media(max-width:330px){
+
+  .stats{
+    gap:5px;
+  }
+
+  .stat{
+    padding:8px 3px;
+  }
+
+  .stat-value{
+    font-size:16px;
+  }
+
+  .arena{
+    min-height:300px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+<div class="blob blob4"></div>
+
+<div class="sparkle s1">✦</div>
+<div class="sparkle s2">✧</div>
+<div class="sparkle s3">✦</div>
+<div class="sparkle s4">✧</div>
+
+
+<main class="game">
+
+
+  <div class="header">
+
+    <div class="mini">
+      mini game ♡
+    </div>
+
+    <h1>
+      Catch the Cat!
+    </h1>
+
+    <p>
+      Catch the little cat before the time runs out
+    </p>
+
+  </div>
+
+
+  <div class="stats">
+
+    <div class="stat">
+
+      <div class="stat-label">
+        Score
+      </div>
+
+      <div
+        class="stat-value"
+        id="score"
+      >
+        0
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-label">
+        Time
+      </div>
+
+      <div
+        class="stat-value"
+        id="time"
+      >
+        30
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-label">
+        Combo
+      </div>
+
+      <div
+        class="stat-value"
+        id="combo"
+      >
+        0
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-label">
+        Best
+      </div>
+
+      <div
+        class="stat-value"
+        id="best"
+      >
+        0
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="arena"
+    id="arena"
+  >
+
+
+    <div
+      class="cat hidden"
+      id="cat"
+    >
+
+      <img
+        src="cat.png"
+        alt="cat"
+      >
+
+    </div>
+
+
+    <!-- START -->
+
+    <div
+      class="overlay"
+      id="startScreen"
+    >
+
+      <div class="panel">
+
+        <div class="start-cat">
+
+          <img
+            src="cat.png"
+            alt="cat"
+          >
+
+        </div>
+
+        <h2>
+          Ready?
+        </h2>
+
+        <p>
+          Catch the little cat as many times
+          as you can before the 30 seconds are over!
+        </p>
+
+        <button
+          class="main-btn"
+          id="startBtn"
+        >
+          Start Game ♡
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- END -->
+
+    <div
+      class="overlay hidden"
+      id="endScreen"
+    >
+
+      <div class="panel">
+
+        <div
+          style="
+            font-size:42px;
+            margin-bottom:5px;
+          "
+        >
+          🎀
+        </div>
+
+        <h2>
+          Time's Up!
+        </h2>
+
+        <div class="result-score">
+
+          <span
+            class="number"
+            id="finalScore"
+          >
+            0
+          </span>
+
+          <span class="label">
+            your score
+          </span>
+
+        </div>
+
+        <div class="result-buttons">
+
+          <button
+            class="main-btn"
+            id="againBtn"
+          >
+            Play Again ♡
+          </button>
+
+          <button
+            class="main-btn next-btn"
+            id="nextBtn"
+          >
+            Next →
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="hint">
+    tap the cat as quickly as you can ✦
+  </div>
+
+
+</main>
+
+
+<script>
+
+let score = 0;
+let time = 30;
+let combo = 0;
+let level = 1;
+
+let gameRunning = false;
+
+let moveTimer;
+let countdown;
+
+let audioCtx;
+
+let bestScore =
+  Number(
+    localStorage.getItem("catchCatBest")
+  ) || 0;
+
+
+const arena =
+  document.getElementById("arena");
+
+const cat =
+  document.getElementById("cat");
+
+const scoreEl =
+  document.getElementById("score");
+
+const timeEl =
+  document.getElementById("time");
+
+const comboEl =
+  document.getElementById("combo");
+
+const bestEl =
+  document.getElementById("best");
+
+const startScreen =
+  document.getElementById("startScreen");
+
+const endScreen =
+  document.getElementById("endScreen");
+
+const finalScore =
+  document.getElementById("finalScore");
+
+const startBtn =
+  document.getElementById("startBtn");
+
+const againBtn =
+  document.getElementById("againBtn");
+
+const nextBtn =
+  document.getElementById("nextBtn");
+
+
+bestEl.textContent =
+  bestScore;
+
+
+/* =========================
+   MEOW SOUND
+========================= */
+
+function playMeow(){
+
+  if(!audioCtx){
+
+    audioCtx =
+      new (
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
+
+  }
+
+  if(audioCtx.state === "suspended"){
+    audioCtx.resume();
+  }
+
+  const now =
+    audioCtx.currentTime;
+
+  const oscillator =
+    audioCtx.createOscillator();
+
+  const gain =
+    audioCtx.createGain();
+
+  oscillator.type =
+    "sine";
+
+  oscillator.frequency.setValueAtTime(
+    520,
+    now
+  );
+
+  oscillator.frequency.exponentialRampToValueAtTime(
+    760,
+    now + .08
+  );
+
+  oscillator.frequency.exponentialRampToValueAtTime(
+    430,
+    now + .22
+  );
+
+  gain.gain.setValueAtTime(
+    0,
+    now
+  );
+
+  gain.gain.linearRampToValueAtTime(
+    .16,
+    now + .025
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+    .001,
+    now + .28
+  );
+
+  oscillator.connect(gain);
+
+  gain.connect(
+    audioCtx.destination
+  );
+
+  oscillator.start(now);
+
+  oscillator.stop(
+    now + .3
+  );
+
+}
+
+
+/* =========================
+   RANDOM POSITION
+========================= */
+
+function randomPosition(){
+
+  const padding = 8;
+
+  const maxX =
+    arena.clientWidth -
+    cat.offsetWidth -
+    padding;
+
+  const maxY =
+    arena.clientHeight -
+    cat.offsetHeight -
+    padding;
+
+  const x =
+    padding +
+    Math.random() *
+    Math.max(
+      maxX - padding,
+      0
+    );
+
+  const y =
+    padding +
+    Math.random() *
+    Math.max(
+      maxY - padding,
+      0
+    );
+
+  cat.style.left =
+    `${x}px`;
+
+  cat.style.top =
+    `${y}px`;
+
+  cat.classList.remove(
+    "pop"
+  );
+
+  void cat.offsetWidth;
+
+  cat.classList.add(
+    "pop"
+  );
+
+}
+
+
+/* =========================
+   SCORE POPUP
+========================= */
+
+function showPlus(x,y){
+
+  const plus =
+    document.createElement("div");
+
+  plus.className =
+    "plus";
+
+  plus.textContent =
+    combo > 1
+      ? `+${combo}`
+      : "+1";
+
+  plus.style.left =
+    `${x}px`;
+
+  plus.style.top =
+    `${y}px`;
+
+  arena.appendChild(
+    plus
+  );
+
+  setTimeout(()=>{
+    plus.remove();
+  },700);
+
+}
+
+
+/* =========================
+   SPARKLES
+========================= */
+
+function showHitSparkles(x,y){
+
+  const symbols =
+    ["✦","✧","♡","·"];
+
+  for(let i=0;i<4;i++){
+
+    const sparkle =
+      document.createElement("div");
+
+    sparkle.className =
+      "hit-sparkle";
+
+    sparkle.textContent =
+      symbols[
+        Math.floor(
+          Math.random() *
+          symbols.length
+        )
+      ];
+
+    sparkle.style.left =
+      `${x}px`;
+
+    sparkle.style.top =
+      `${y}px`;
+
+    sparkle.style.setProperty(
+      "--x",
+      `${(Math.random()-.5)*60}px`
+    );
+
+    sparkle.style.setProperty(
+      "--y",
+      `${(Math.random()-.5)*60}px`
+    );
+
+    arena.appendChild(
+      sparkle
+    );
+
+    setTimeout(()=>{
+      sparkle.remove();
+    },600);
+
+  }
+
+}
+
+
+/* =========================
+   FLASH
+========================= */
+
+function flash(){
+
+  arena.classList.remove(
+    "flash"
+  );
+
+  void arena.offsetWidth;
+
+  arena.classList.add(
+    "flash"
+  );
+
+}
+
+
+/* =========================
+   LEVEL
+========================= */
+
+function updateLevel(){
+
+  level =
+    Math.floor(
+      score / 5
+    ) + 1;
+
+}
+
+
+/* =========================
+   SPEED
+========================= */
+
+function updateSpeed(){
+
+  clearInterval(
+    moveTimer
+  );
+
+  const speed =
+    Math.max(
+      350,
+      1200 -
+      ((level - 1) * 120)
+    );
+
+  moveTimer =
+    setInterval(
+      randomPosition,
+      speed
+    );
+
+}
+
+
+/* =========================
+   CATCH
+========================= */
+
+function catchCat(e){
+
+  if(!gameRunning)
+    return;
+
+  e.preventDefault();
+  e.stopPropagation();
+
+  playMeow();
+
+
+  const rect =
+    cat.getBoundingClientRect();
+
+  const arenaRect =
+    arena.getBoundingClientRect();
+
+
+  const x =
+    rect.left -
+    arenaRect.left +
+    rect.width / 2;
+
+  const y =
+    rect.top -
+    arenaRect.top;
+
+
+  score++;
+
+  combo++;
+
+
+  updateLevel();
+
+
+  scoreEl.textContent =
+    score;
+
+  comboEl.textContent =
+    combo;
+
+
+  if(score > bestScore){
+
+    bestScore =
+      score;
+
+    bestEl.textContent =
+      bestScore;
+
+    localStorage.setItem(
+      "catchCatBest",
+      bestScore
+    );
+
+  }
+
+
+  showPlus(x,y);
+
+  showHitSparkles(x,y);
+
+  flash();
+
+  randomPosition();
+
+  updateSpeed();
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+function startGame(){
+
+  clearInterval(
+    moveTimer
+  );
+
+  clearInterval(
+    countdown
+  );
+
+
+  score = 0;
+  time = 30;
+  combo = 0;
+  level = 1;
+
+
+  scoreEl.textContent =
+    score;
+
+  timeEl.textContent =
+    time;
+
+  comboEl.textContent =
+    combo;
+
+
+  gameRunning =
+    true;
+
+
+  startScreen.classList.add(
+    "hidden"
+  );
+
+  endScreen.classList.add(
+    "hidden"
+  );
+
+
+  cat.classList.remove(
+    "hidden"
+  );
+
+
+  randomPosition();
+
+  updateSpeed();
+
+
+  countdown =
+    setInterval(()=>{
+
+      time--;
+
+      timeEl.textContent =
+        time;
+
+
+      if(time <= 0){
+
+        endGame();
+
+      }
+
+    },1000);
+
+}
+
+
+/* =========================
+   END
+========================= */
+
+function endGame(){
+
+  gameRunning =
+    false;
+
+
+  clearInterval(
+    moveTimer
+  );
+
+  clearInterval(
+    countdown
+  );
+
+
+  cat.classList.add(
+    "hidden"
+  );
+
+
+  finalScore.textContent =
+    score;
+
+
+  endScreen.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+againBtn.addEventListener(
+  "click",
+  startGame
+);
+
+startBtn.addEventListener(
+  "click",
+  startGame
+);
+
+
+nextBtn.addEventListener(
+  "click",
+  () => {
+
+    window.location.href =
+      "thenext.html";
+
+  }
+);
+
+
+/* =========================
+   CAT
+========================= */
+
+cat.addEventListener(
+  "pointerdown",
+  catchCat
+);
+
+
+/* =========================
+   RESIZE
+========================= */
+
+window.addEventListener(
+  "resize",
+  () => {
+
+    if(gameRunning){
+
+      randomPosition();
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Special Adventure</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      color: #222;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 78%;
+      max-width: 500px;
+      text-align: left;
+    }
+
+    #text {
+      font-size: 17px;
+      line-height: 1.7;
+      font-weight: 300;
+      letter-spacing: 0.2px;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 1px;
+      height: 15px;
+      background: #222;
+      margin-left: 2px;
+      vertical-align: -2px;
+      animation: blink 0.8s infinite;
+    }
+
+    #continue {
+      opacity: 0;
+      margin-top: 25px;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 1.5px;
+      color: #999;
+      transition: opacity 1s ease;
+    }
+
+    #continue.show {
+      opacity: 1;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body onclick="goNext()">
+
+  <div class="container">
+    <div id="text">
+      <span id="typed"></span><span class="cursor"></span>
+    </div>
+
+    <div id="continue">
+      Tap anywhere to continue
+    </div>
+  </div>
+
+  <script>
+    const message =
+      "I just wanna ask:\nAre you ready for your special adventure?";
+
+    const typed = document.getElementById("typed");
+    const continueText = document.getElementById("continue");
+
+    let index = 0;
+    let finished = false;
+
+    function typeWriter() {
+      if (index < message.length) {
+
+        if (message[index] === "\n") {
+          typed.innerHTML += "<br>";
+        } else {
+          typed.innerHTML += message[index];
+        }
+
+        index++;
+        setTimeout(typeWriter, 70);
+
+      } else {
+        finished = true;
+
+        setTimeout(() => {
+          continueText.classList.add("show");
+        }, 500);
+      }
+    }
+
+    function goNext() {
+      if (finished) {
+        window.location.href = "secondpage.html";
+      }
+    }
+
+    setTimeout(typeWriter, 500);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Something to Light</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #fff;
+      color: #222;
+      font-family: Arial, sans-serif;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .container {
+      width: 85%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+
+    /* =========================
+       INTRO
+    ========================= */
+
+    .intro {
+      margin-bottom: 42px;
+
+      opacity: 0;
+      transform: translateY(10px);
+
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .intro h1 {
+      margin: 0 0 10px;
+
+      font-size: 15px;
+      font-weight: 300;
+
+      letter-spacing: 0.5px;
+    }
+
+    .intro p {
+      margin: 0;
+
+      font-size: 11px;
+      font-weight: 300;
+
+      color: #999;
+
+      line-height: 1.8;
+    }
+
+
+    /* =========================
+       CANDLE AREA
+    ========================= */
+
+    .candle-area {
+      position: relative;
+
+      width: 180px;
+      height: 220px;
+
+      margin: 0 auto;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.3s ease;
+    }
+
+
+    /* =========================
+       GLOW
+    ========================= */
+
+    .glow {
+      position: absolute;
+
+      left: 50%;
+      top: 18px;
+
+      width: 120px;
+      height: 120px;
+
+      transform: translateX(-50%);
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(255, 205, 100, 0.22) 0%,
+          rgba(255, 205, 100, 0.09) 35%,
+          rgba(255, 205, 100, 0) 72%
+        );
+
+      filter: blur(12px);
+
+      animation: glowPulse 2s ease-in-out infinite;
+
+      transition:
+        opacity 0.8s ease;
+    }
+
+
+    /* =========================
+       FLAME
+    ========================= */
+
+    .flame-wrapper {
+      position: absolute;
+
+      left: 50%;
+      top: 20px;
+
+      width: 45px;
+      height: 65px;
+
+      transform: translateX(-50%);
+
+      transform-origin: 50% 100%;
+
+      z-index: 3;
+
+      transition:
+        opacity 0.5s ease,
+        transform 0.8s ease;
+    }
+
+
+    .flame-outer {
+      position: absolute;
+
+      left: 50%;
+      bottom: 0;
+
+      width: 29px;
+      height: 50px;
+
+      transform:
+        translateX(-50%)
+        rotate(1deg);
+
+      border-radius:
+        50% 50% 45% 55%
+        / 65% 65% 35% 35%;
+
+      background:
+        radial-gradient(
+          ellipse at 50% 72%,
+          #fff4c9 0%,
+          #ffd76f 25%,
+          #e5a038 58%,
+          #a76224 100%
+        );
+
+      transform-origin: 50% 100%;
+
+      animation:
+        flameMove 0.8s ease-in-out infinite alternate;
+    }
+
+
+    .flame-inner {
+      position: absolute;
+
+      left: 50%;
+      bottom: 1px;
+
+      width: 15px;
+      height: 30px;
+
+      transform:
+        translateX(-50%)
+        rotate(-2deg);
+
+      border-radius:
+        50% 50% 48% 52%
+        / 65% 65% 35% 35%;
+
+      background:
+        radial-gradient(
+          ellipse at 50% 75%,
+          #fff 0%,
+          #fffbe8 35%,
+          #ffe49b 72%,
+          rgba(255, 228, 155, 0) 100%
+        );
+
+      transform-origin: 50% 100%;
+
+      animation:
+        innerFlameMove 0.55s ease-in-out infinite alternate;
+    }
+
+
+    .flame-core {
+      position: absolute;
+
+      left: 50%;
+      bottom: 0;
+
+      width: 7px;
+      height: 13px;
+
+      transform: translateX(-50%);
+
+      border-radius: 50%;
+
+      background: #fff;
+
+      filter: blur(1px);
+    }
+
+
+    /* =========================
+       WICK
+    ========================= */
+
+    .wick {
+      position: absolute;
+
+      left: 50%;
+      top: -13px;
+
+      width: 2px;
+      height: 11px;
+
+      transform: translateX(-50%);
+
+      background: #333;
+
+      border-radius: 2px;
+
+      z-index: 5;
+    }
+
+
+    /* =========================
+       CANDLE
+    ========================= */
+
+    .candle {
+      position: absolute;
+
+      left: 50%;
+      bottom: 32px;
+
+      width: 50px;
+      height: 92px;
+
+      transform: translateX(-50%);
+
+      background:
+        linear-gradient(
+          90deg,
+          #e7e7e7 0%,
+          #f8f8f8 28%,
+          #eeeeee 65%,
+          #dddddd 100%
+        );
+
+      border: 1px solid #ddd;
+
+      border-radius:
+        3px 3px 5px 5px;
+
+      box-shadow:
+        0 5px 12px rgba(0, 0, 0, 0.04);
+    }
+
+
+    .candle::before {
+      content: "";
+
+      position: absolute;
+
+      top: -7px;
+      left: 50%;
+
+      width: 50px;
+      height: 11px;
+
+      transform: translateX(-50%);
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          ellipse,
+          #f9f9f9 0%,
+          #ededed 70%,
+          #ddd 100%
+        );
+
+      border: 1px solid #ddd;
+    }
+
+
+    /* =========================
+       SMOKE
+    ========================= */
+
+    .smoke {
+      position: absolute;
+
+      left: 50%;
+      top: 15px;
+
+      width: 5px;
+      height: 20px;
+
+      transform:
+        translateX(-50%)
+        scale(0);
+
+      opacity: 0;
+
+      z-index: 4;
+
+      pointer-events: none;
+    }
+
+
+    .smoke::before,
+    .smoke::after {
+      content: "";
+
+      position: absolute;
+
+      width: 7px;
+      height: 18px;
+
+      border-radius: 50%;
+
+      border-left: 1px solid rgba(120,120,120,0.35);
+
+      filter: blur(0.5px);
+    }
+
+
+    .smoke::before {
+      left: -3px;
+      top: 0;
+
+      transform: rotate(12deg);
+    }
+
+
+    .smoke::after {
+      left: 1px;
+      top: -5px;
+
+      transform: rotate(-15deg);
+    }
+
+
+    .smoke-rise {
+      animation: smokeRise 2.5s ease-out forwards;
+    }
+
+
+    /* =========================
+       BLOW BUTTON
+    ========================= */
+
+    .blow-area {
+      margin-top: 4px;
+
+      opacity: 0;
+
+      animation:
+        fadeIn 1s ease 1s forwards;
+    }
+
+
+    .blow-button {
+      display: inline-block;
+
+      padding: 10px 18px;
+
+      border: 1px solid #ddd;
+      border-radius: 30px;
+
+      background: #fff;
+
+      color: #555;
+
+      font-size: 11px;
+      font-weight: 300;
+
+      letter-spacing: 0.2px;
+
+      cursor: pointer;
+
+      touch-action: none;
+
+      transition:
+        background 0.2s ease,
+        border 0.2s ease,
+        transform 0.2s ease;
+    }
+
+
+    .blow-button:hover {
+      border-color: #bbb;
+    }
+
+
+    .blow-button:active,
+    .blow-button.blowing {
+      transform: scale(0.96);
+
+      background: #fafafa;
+
+      border-color: #aaa;
+    }
+
+
+    /* =========================
+       MESSAGE
+    ========================= */
+
+    .message {
+      margin-top: 20px;
+
+      min-height: 40px;
+
+      font-size: 12px;
+      font-weight: 300;
+
+      color: #555;
+
+      line-height: 1.8;
+
+      opacity: 0;
+
+      transform: translateY(8px);
+
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+    }
+
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    /* =========================
+       CONTINUE
+    ========================= */
+
+    .continue {
+      margin-top: 20px;
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition:
+        opacity 0.8s ease;
+    }
+
+
+    .continue.show {
+      opacity: 1;
+
+      pointer-events: auto;
+    }
+
+
+    .continue button {
+      border: none;
+
+      background: none;
+
+      padding: 8px 0;
+
+      font-size: 12px;
+      font-weight: 300;
+
+      color: #555;
+
+      cursor: pointer;
+
+      transition:
+        opacity 0.3s ease;
+    }
+
+
+    .continue button:hover {
+      opacity: 0.5;
+    }
+
+
+    /* =========================
+       EXTINGUISH ANIMATION
+    ========================= */
+
+    .extinguishing .flame-wrapper {
+      animation:
+        extinguish 1.1s ease forwards;
+    }
+
+
+    .extinguishing .glow {
+      animation:
+        glowOff 1.1s ease forwards;
+    }
+
+
+    /* =========================
+       KEYFRAMES
+    ========================= */
+
+    @keyframes fadeIn {
+
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+    }
+
+
+    @keyframes flameMove {
+
+      0% {
+        transform:
+          translateX(-50%)
+          rotate(-3deg)
+          scaleX(0.94)
+          scaleY(0.98);
+      }
+
+      35% {
+        transform:
+          translateX(-50%)
+          rotate(4deg)
+          scaleX(1.02)
+          scaleY(1.05);
+      }
+
+      70% {
+        transform:
+          translateX(-50%)
+          rotate(-1deg)
+          scaleX(0.97)
+          scaleY(1.02);
+      }
+
+      100% {
+        transform:
+          translateX(-50%)
+          rotate(5deg)
+          scaleX(0.92)
+          scaleY(1.08);
+      }
+
+    }
+
+
+    @keyframes innerFlameMove {
+
+      0% {
+        transform:
+          translateX(-50%)
+          rotate(2deg)
+          scale(0.94);
+      }
+
+      50% {
+        transform:
+          translateX(-50%)
+          rotate(-4deg)
+          scale(1.04);
+      }
+
+      100% {
+        transform:
+          translateX(-50%)
+          rotate(3deg)
+          scale(0.98);
+      }
+
+    }
+
+
+    @keyframes glowPulse {
+
+      0% {
+        transform:
+          translateX(-50%)
+          scale(0.9);
+
+        opacity: 0.55;
+      }
+
+      50% {
+        transform:
+          translateX(-50%)
+          scale(1.08);
+
+        opacity: 0.9;
+      }
+
+      100% {
+        transform:
+          translateX(-50%)
+          scale(0.95);
+
+        opacity: 0.6;
+      }
+
+    }
+
+
+    @keyframes extinguish {
+
+      0% {
+        opacity: 1;
+
+        transform:
+          translateX(-50%)
+          scale(1)
+          rotate(0deg);
+      }
+
+      35% {
+        opacity: 0.85;
+
+        transform:
+          translateX(-50%)
+          scaleX(0.7)
+          scaleY(1.15)
+          rotate(-8deg);
+      }
+
+      65% {
+        opacity: 0.45;
+
+        transform:
+          translateX(-50%)
+          scaleX(0.35)
+          scaleY(0.8)
+          rotate(8deg);
+      }
+
+      100% {
+        opacity: 0;
+
+        transform:
+          translateX(-50%)
+          scaleX(0.05)
+          scaleY(0.2);
+      }
+
+    }
+
+
+    @keyframes glowOff {
+
+      0% {
+        opacity: 1;
+        transform:
+          translateX(-50%)
+          scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform:
+          translateX(-50%)
+          scale(0.5);
+      }
+
+    }
+
+
+    @keyframes smokeRise {
+
+      0% {
+        opacity: 0;
+        transform:
+          translateX(-50%)
+          translateY(0)
+          scale(0.5);
+      }
+
+      20% {
+        opacity: 0.55;
+      }
+
+      60% {
+        opacity: 0.3;
+      }
+
+      100% {
+        opacity: 0;
+        transform:
+          translateX(-50%)
+          translateY(-65px)
+          scale(1.8);
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <div class="container">
+
+
+    <!-- INTRO -->
+
+    <div class="intro">
+
+      <h1>Something to Light</h1>
+
+      <p>
+        Bismillah. Make a wish.<br>
+        Then blow the candle.
+      </p>
+
+    </div>
+
+
+    <!-- CANDLE -->
+
+    <div
+      class="candle-area"
+      id="candleArea"
+    >
+
+      <!-- Glow -->
+
+      <div class="glow"></div>
+
+
+      <!-- Flame -->
+
+      <div class="flame-wrapper">
+
+        <div class="flame-outer"></div>
+
+        <div class="flame-inner"></div>
+
+        <div class="flame-core"></div>
+
+      </div>
+
+
+      <!-- Smoke -->
+
+      <div
+        class="smoke"
+        id="smoke"
+      ></div>
+
+
+      <!-- Candle -->
+
+      <div class="candle">
+
+        <div class="wick"></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- BLOW BUTTON -->
+
+    <div class="blow-area">
+
+      <div
+        class="blow-button"
+        id="blowButton"
+      >
+        Press and hold to blow
+      </div>
+
+    </div>
+
+
+    <!-- MESSAGE -->
+
+    <div
+      class="message"
+      id="message"
+    ></div>
+
+
+    <!-- CONTINUE -->
+
+    <div
+      class="continue"
+      id="continueBox"
+    >
+
+      <button onclick="goNext()">
+        Continue →
+      </button>
+
+    </div>
+
+
+  </div>
+
+
+  <script>
+
+    let blowTimer = null;
+    let blowProgress = 0;
+    let isBlown = false;
+
+
+    const blowButton =
+      document.getElementById("blowButton");
+
+    const candleArea =
+      document.getElementById("candleArea");
+
+    const flameWrapper =
+      document.querySelector(".flame-wrapper");
+
+    const message =
+      document.getElementById("message");
+
+    const smoke =
+      document.getElementById("smoke");
+
+    const continueBox =
+      document.getElementById("continueBox");
+
+
+    /*
+      Start blowing
+    */
+
+    function startBlowing(event) {
+
+      if (isBlown) return;
+
+      event.preventDefault();
+
+      blowButton.classList.add("blowing");
+
+
+      /*
+        The longer the button is held,
+        the weaker the flame becomes.
+      */
+
+      blowTimer = setInterval(() => {
+
+        blowProgress += 4;
+
+
+        const strength =
+          Math.max(
+            0.05,
+            1 - blowProgress / 100
+          );
+
+
+        flameWrapper.style.transform =
+          `translateX(-50%)
+           scaleX(${strength})
+           scaleY(${strength})`;
+
+
+        /*
+          When progress reaches 100,
+          extinguish the candle.
+        */
+
+        if (blowProgress >= 100) {
+
+          clearInterval(blowTimer);
+
+          extinguishCandle();
+
+        }
+
+      }, 100);
+
+    }
+
+
+    /*
+      Stop blowing
+    */
+
+    function stopBlowing() {
+
+      if (isBlown) return;
+
+      clearInterval(blowTimer);
+
+      blowButton.classList.remove("blowing");
+
+
+      /*
+        Flame slowly returns
+        if user releases too early.
+      */
+
+      if (blowProgress < 100) {
+
+        flameWrapper.style.transform =
+          "translateX(-50%)";
+
+        blowProgress = 0;
+
+      }
+
+    }
+
+
+    /*
+      Extinguish candle
+    */
+
+    function extinguishCandle() {
+
+      isBlown = true;
+
+      blowButton.classList.remove("blowing");
+
+      blowButton.style.opacity = "0.4";
+
+      blowButton.style.pointerEvents = "none";
+
+
+      /*
+        Extinguish flame
+      */
+
+      candleArea.classList.add(
+        "extinguishing"
+      );
+
+
+      /*
+        Smoke appears
+      */
+
+      setTimeout(() => {
+
+        smoke.classList.add(
+          "smoke-rise"
+        );
+
+      }, 700);
+
+
+      /*
+        Show message
+      */
+
+      setTimeout(() => {
+
+        message.innerHTML =
+          `The candle is out.<br>
+           I hope your wish comes true.`;
+
+        message.classList.add("show");
+
+      }, 1100);
+
+
+      /*
+        Show continue button
+      */
+
+      setTimeout(() => {
+
+        continueBox.classList.add("show");
+
+      }, 2300);
+
+    }
+
+
+    /*
+      Mouse events
+    */
+
+    blowButton.addEventListener(
+      "mousedown",
+      startBlowing
+    );
+
+    blowButton.addEventListener(
+      "mouseup",
+      stopBlowing
+    );
+
+    blowButton.addEventListener(
+      "mouseleave",
+      stopBlowing
+    );
+
+
+    /*
+      Touch events
+    */
+
+    blowButton.addEventListener(
+      "touchstart",
+      startBlowing,
+      { passive: false }
+    );
+
+    blowButton.addEventListener(
+      "touchend",
+      stopBlowing
+    );
+
+    blowButton.addEventListener(
+      "touchcancel",
+      stopBlowing
+    );
+
+
+    /*
+      Go to playlist
+    */
+
+    function goNext() {
+
+      window.location.href =
+        "page6.html";
+
+    }
+
+  </script>
+
+</body>
+</html>

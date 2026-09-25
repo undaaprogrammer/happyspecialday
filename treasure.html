@@ -1,0 +1,589 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Final Quest</title><style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #fff;
+    color: #111;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: min(88%, 480px);
+    padding: 60px 0;
+}
+
+
+/* HEADER */
+
+.header {
+    text-align: center;
+}
+
+.eyebrow {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #aaa;
+    margin-bottom: 27px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 27px;
+    line-height: 1.4;
+    font-weight: 300;
+    letter-spacing: -0.7px;
+}
+
+.intro {
+    margin-top: 13px;
+    font-size: 13px;
+    color: #999;
+    font-weight: 300;
+}
+
+
+/* MISSION */
+
+.mission {
+    margin-top: 62px;
+}
+
+.mission-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.mission-number,
+.status {
+    font-size: 8px;
+    letter-spacing: 2.5px;
+}
+
+.mission-number {
+    color: #999;
+}
+
+.status {
+    color: #bbb;
+}
+
+.mission-title {
+    font-size: 19px;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+
+/* QUEST PATH */
+
+.quest-path {
+    border: 1px solid #e7e7e7;
+    padding: 28px 25px 30px;
+}
+
+.quest-label {
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: #aaa;
+    margin-bottom: 28px;
+}
+
+
+/* EACH STEP */
+
+.step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    column-gap: 17px;
+    min-height: 72px;
+}
+
+
+/* CONNECTING LINE */
+
+.step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 31px;
+    width: 1px;
+    height: 55px;
+    background: #e4e4e4;
+}
+
+
+/* NUMBER CIRCLE */
+
+.step-number {
+    position: relative;
+    z-index: 2;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #dcdcdc;
+    border-radius: 50%;
+    background: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 8px;
+    letter-spacing: .5px;
+    color: #999;
+}
+
+
+/* STEP CONTENT */
+
+.step-content {
+    padding-top: 2px;
+    padding-bottom: 24px;
+}
+
+.step-title {
+    font-size: 12px;
+    color: #222;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.step-description {
+    margin-top: 5px;
+    font-size: 10px;
+    line-height: 1.6;
+    color: #aaa;
+    font-weight: 300;
+}
+
+
+/* LAST STEP */
+
+.step:last-child {
+    min-height: auto;
+}
+
+.step:last-child .step-content {
+    padding-bottom: 0;
+}
+
+
+/* DIVIDER */
+
+.divider {
+    height: 1px;
+    background: #eee;
+    margin: 40px 0;
+}
+
+
+/* ANSWER */
+
+.label {
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: #aaa;
+    margin-bottom: 14px;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    min-height: 45px;
+    border: 1px solid #ddd;
+    padding-left: 14px;
+    transition: border-color .2s ease;
+}
+
+.input-row:focus-within {
+    border-color: #999;
+}
+
+input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 12px;
+    color: #111;
+}
+
+input::placeholder {
+    color: #bbb;
+    font-weight: 300;
+}
+
+.unlock {
+    height: 43px;
+    padding: 0 16px;
+    border: none;
+    border-left: 1px solid #ddd;
+    background: #111;
+    color: #fff;
+    font-family: inherit;
+    font-size: 10px;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.unlock:hover {
+    background: #333;
+}
+
+.message {
+    min-height: 18px;
+    margin-top: 12px;
+    font-size: 10px;
+    color: #aaa;
+}
+
+
+/* NEXT */
+
+.next-mission {
+    display: none;
+    margin-top: 35px;
+    padding: 28px 22px;
+    border: 1px solid #e8e8e8;
+}
+
+.next-label {
+    font-size: 8px;
+    letter-spacing: 2.5px;
+    color: #aaa;
+    margin-bottom: 15px;
+}
+
+.next-text {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #666;
+    font-weight: 300;
+}
+
+.continue {
+    display: inline-block;
+    margin-top: 22px;
+    font-size: 11px;
+    color: #111;
+    text-decoration: none;
+}
+
+.continue:hover {
+    opacity: .5;
+}
+
+
+/* FOOTER */
+
+.footer {
+    margin-top: 55px;
+    text-align: center;
+    font-size: 8px;
+    letter-spacing: 2.5px;
+    color: #ccc;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+    .container {
+        width: 86%;
+        padding: 45px 0;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    .mission {
+        margin-top: 52px;
+    }
+
+    .quest-path {
+        padding: 25px 19px 27px;
+    }
+
+    .step {
+        grid-template-columns: 32px 1fr;
+        column-gap: 14px;
+    }
+
+    .step:not(:last-child)::after {
+        left: 15px;
+    }
+
+    .input-row {
+        min-height: 44px;
+    }
+
+    .unlock {
+        padding: 0 13px;
+    }
+}
+</style></head><body><div class="container"><div class="header">
+
+    <div class="eyebrow">
+        THE FINAL QUEST
+    </div>
+
+    <h1>
+        You thought the journey was over?
+    </h1>
+
+    <div class="intro">
+        It isn't.
+    </div>
+
+</div>
+
+
+<section class="mission">
+
+    <div class="mission-header">
+
+        <div class="mission-number">
+            MISSION 01
+        </div>
+
+        <div class="status">
+            IN PROGRESS
+        </div>
+
+    </div>
+
+
+    <div class="mission-title">
+        Find the first clue.
+    </div>
+
+
+    <div class="quest-path">
+
+        <div class="quest-label">
+            FOLLOW THE PATH
+        </div>
+
+
+        <!-- STEP 01 -->
+
+        <div class="step">
+
+            <div class="step-number">
+                01
+            </div>
+
+            <div class="step-content">
+
+                <div class="step-title">
+                    Visit the account you always check on TikTok.
+                </div>
+
+                <div class="step-description">
+                    You probably know which one.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STEP 02 -->
+
+        <div class="step">
+
+            <div class="step-number">
+                02
+            </div>
+
+            <div class="step-content">
+
+                <div class="step-title">
+                    Look at the bio.
+                </div>
+
+                <div class="step-description">
+                    Something is waiting there.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STEP 03 -->
+
+        <div class="step">
+
+            <div class="step-number">
+                03
+            </div>
+
+            <div class="step-content">
+
+                <div class="step-title">
+                    Find the hidden clue.
+                </div>
+
+                <div class="step-description">
+                    Read it carefully.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STEP 04 -->
+
+        <div class="step">
+
+            <div class="step-number">
+                04
+            </div>
+
+            <div class="step-content">
+
+                <div class="step-title">
+                    Come back here.
+                </div>
+
+                <div class="step-description">
+                    Enter what you found below.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="divider"></div>
+
+
+    <div class="label">
+        FOUND THE CLUE?
+    </div>
+
+
+    <div class="input-row">
+
+        <input
+            type="text"
+            id="answer"
+            placeholder="enter what you found"
+            autocomplete="off"
+        >
+
+        <button
+            class="unlock"
+            onclick="checkAnswer()"
+        >
+            Unlock →
+        </button>
+
+    </div>
+
+
+    <div
+        class="message"
+        id="message"
+    ></div>
+
+
+    <div
+        class="next-mission"
+        id="nextMission"
+    >
+
+        <div class="next-label">
+            MISSION 01 COMPLETE
+        </div>
+
+        <div class="next-text">
+            Four songs gave you the answer.
+            <br>
+            Now look at what comes next.
+        </div>
+
+        <a
+            href="https://youtu.be/dQw4w9WgXcQ?si=PAQoP2Smv8piIO19"
+            class="continue"
+        >
+            Continue →
+        </a>
+
+    </div>
+
+</section>
+
+
+<div class="footer">
+    one clue at a time
+</div>
+
+</div><script>
+
+function checkAnswer() {
+
+    const input =
+        document.getElementById("answer")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const message =
+        document.getElementById("message");
+
+    const nextMission =
+        document.getElementById("nextMission");
+
+
+    if (input === "i like you back") {
+
+        message.textContent = "Correct.";
+        message.style.color = "#111";
+
+        nextMission.style.display = "block";
+
+    } else {
+
+        message.textContent =
+            "Not quite. Look a little closer.";
+
+        message.style.color = "#aaa";
+
+    }
+}
+
+
+document
+    .getElementById("answer")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+            checkAnswer();
+        }
+
+    });
+
+</script></body>
+</html>

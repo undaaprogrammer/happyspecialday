@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Before You Go ♡</title>
+
+<!-- Cute rounded font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  min-height:100%;
+}
+
+body{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  overflow:hidden;
+
+  background:#fffaf2;
+  color:#62596b;
+
+  font-family:"Quicksand",sans-serif;
+}
+
+
+/* =========================
+   OPENING
+========================= */
+
+.intro-screen{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#fff;
+
+  pointer-events:none;
+
+  animation:introFade 1.5s ease forwards;
+}
+
+.intro-dot{
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  background:#62596b;
+
+  opacity:0;
+
+  animation:
+    dotAppear .7s ease .15s forwards,
+    dotFade .5s ease .75s forwards;
+}
+
+@keyframes introFade{
+  0%,65%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:0;
+    visibility:hidden;
+  }
+}
+
+@keyframes dotAppear{
+  from{
+    opacity:0;
+    transform:scale(.4);
+  }
+
+  to{
+    opacity:.45;
+    transform:scale(1);
+  }
+}
+
+@keyframes dotFade{
+  to{
+    opacity:0;
+    transform:scale(1.7);
+  }
+}
+
+
+/* =========================
+   BACKGROUND BLOBS
+========================= */
+
+.blob{
+  position:fixed;
+  border-radius:50%;
+
+  pointer-events:none;
+
+  opacity:.55;
+
+  filter:blur(2px);
+
+  animation:blobFloat 8s ease-in-out infinite;
+}
+
+.blob.one{
+  width:190px;
+  height:190px;
+
+  background:#f5bfd0;
+
+  top:-75px;
+  left:-70px;
+
+  animation-delay:-2s;
+}
+
+.blob.two{
+  width:220px;
+  height:220px;
+
+  background:#c9bdf2;
+
+  top:12%;
+  right:-100px;
+
+  animation-delay:-5s;
+}
+
+.blob.three{
+  width:190px;
+  height:190px;
+
+  background:#a9dfcf;
+
+  bottom:-85px;
+  left:-55px;
+
+  animation-delay:-1s;
+}
+
+.blob.four{
+  width:160px;
+  height:160px;
+
+  background:#a9dcef;
+
+  right:-50px;
+  bottom:-55px;
+
+  animation-delay:-4s;
+}
+
+@keyframes blobFloat{
+
+  0%,100%{
+    transform:translate(0,0) scale(1);
+  }
+
+  50%{
+    transform:translate(12px,-15px) scale(1.06);
+  }
+}
+
+
+/* =========================
+   SPARKLES
+========================= */
+
+.sparkle{
+  position:fixed;
+
+  color:#bca7bf;
+
+  pointer-events:none;
+
+  opacity:0;
+
+  animation:
+    sparkleFloat 4s ease-in-out infinite,
+    sparkleAppear 2s ease-in-out infinite;
+}
+
+.s1{
+  top:15%;
+  left:18%;
+  font-size:14px;
+}
+
+.s2{
+  top:25%;
+  right:18%;
+  font-size:17px;
+  animation-delay:1s;
+}
+
+.s3{
+  bottom:18%;
+  left:25%;
+  font-size:13px;
+  animation-delay:2s;
+}
+
+.s4{
+  bottom:28%;
+  right:20%;
+  font-size:20px;
+  animation-delay:.5s;
+}
+
+@keyframes sparkleFloat{
+
+  0%,100%{
+    transform:translateY(0) rotate(0deg);
+  }
+
+  50%{
+    transform:translateY(-10px) rotate(12deg);
+  }
+}
+
+@keyframes sparkleAppear{
+
+  0%,100%{
+    opacity:.15;
+  }
+
+  50%{
+    opacity:.7;
+  }
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.wrapper{
+  width:min(92vw,430px);
+
+  position:relative;
+  z-index:2;
+
+  opacity:0;
+
+  transform:
+    translateY(25px)
+    scale(.96);
+
+  filter:blur(5px);
+
+  animation:
+    pageAppear 1.2s cubic-bezier(.22,1,.36,1) 1.05s forwards;
+}
+
+@keyframes pageAppear{
+
+  0%{
+    opacity:0;
+
+    transform:
+      translateY(25px)
+      scale(.96);
+
+    filter:blur(5px);
+  }
+
+  55%{
+    opacity:1;
+    filter:blur(0);
+  }
+
+  100%{
+    opacity:1;
+
+    transform:
+      translateY(0)
+      scale(1);
+
+    filter:blur(0);
+  }
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+  position:relative;
+
+  padding:42px 28px 34px;
+
+  text-align:center;
+
+  border-radius:32px;
+
+  background:rgba(255,255,255,.76);
+
+  border:1px solid rgba(255,255,255,.9);
+
+  box-shadow:
+    0 18px 50px rgba(108,89,110,.10);
+
+  backdrop-filter:blur(14px);
+
+  animation:cardFloat 5s ease-in-out 2.2s infinite;
+}
+
+@keyframes cardFloat{
+
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-4px);
+  }
+}
+
+
+/* little shine */
+
+.card::before{
+  content:"";
+
+  position:absolute;
+
+  width:80px;
+  height:80px;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.5);
+
+  top:-35px;
+  right:-25px;
+
+  filter:blur(2px);
+
+  pointer-events:none;
+
+  animation:shineFloat 5s ease-in-out infinite;
+}
+
+@keyframes shineFloat{
+
+  0%,100%{
+    transform:translate(0,0);
+    opacity:.4;
+  }
+
+  50%{
+    transform:translate(-8px,8px);
+    opacity:.7;
+  }
+}
+
+
+/* =========================
+   LABEL
+========================= */
+
+.label{
+  margin-bottom:20px;
+
+  font-family:"Quicksand",sans-serif;
+
+  font-size:9px;
+
+  font-weight:600;
+
+  letter-spacing:3px;
+
+  text-transform:uppercase;
+
+  color:#aaa0ad;
+
+  animation:
+    textReveal .8s ease 1.45s both;
+}
+
+@keyframes textReveal{
+
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+
+/* =========================
+   ICON
+========================= */
+
+.icon{
+  width:78px;
+  height:78px;
+
+  margin:0 auto 22px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:#f8dbe4;
+
+  font-size:34px;
+
+  box-shadow:
+    0 8px 22px rgba(160,120,140,.12);
+
+  animation:
+    iconEnter .8s cubic-bezier(.34,1.56,.64,1) 1.45s both,
+    iconFloat 3.5s ease-in-out 2.4s infinite;
+}
+
+@keyframes iconEnter{
+
+  from{
+    opacity:0;
+    transform:scale(.4) rotate(-15deg);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1) rotate(0);
+  }
+}
+
+@keyframes iconFloat{
+
+  0%,100%{
+    transform:translateY(0) rotate(0);
+  }
+
+  50%{
+    transform:translateY(-6px) rotate(3deg);
+  }
+}
+
+
+/* =========================
+   TEXT
+========================= */
+
+h1{
+  margin-bottom:12px;
+
+  font-family:"Baloo 2",sans-serif;
+
+  font-size:30px;
+
+  line-height:1.15;
+
+  font-weight:600;
+
+  letter-spacing:-.3px;
+
+  color:#62596b;
+
+  animation:
+    textReveal .8s ease 1.55s both;
+}
+
+.description{
+  margin-bottom:28px;
+
+  font-family:"Quicksand",sans-serif;
+
+  font-size:12px;
+
+  line-height:1.8;
+
+  font-weight:500;
+
+  color:#9b929f;
+
+  animation:
+    textReveal .8s ease 1.7s both;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.start-btn{
+  position:relative;
+
+  min-height:47px;
+
+  padding:0 28px;
+
+  border:0;
+
+  border-radius:999px;
+
+  overflow:hidden;
+
+  background:#62596b;
+
+  color:#fff;
+
+  font-family:"Quicksand",sans-serif;
+
+  font-size:12px;
+
+  font-weight:600;
+
+  letter-spacing:.2px;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 8px 18px rgba(98,89,107,.16);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.start-btn::before{
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  left:-100%;
+
+  width:60%;
+  height:100%;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.28),
+    transparent
+  );
+
+  transform:skewX(-20deg);
+
+  animation:buttonShine 3.5s ease-in-out 2.5s infinite;
+}
+
+@keyframes buttonShine{
+
+  0%,55%{
+    left:-100%;
+  }
+
+  75%,100%{
+    left:140%;
+  }
+}
+
+.start-btn:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 12px 25px rgba(98,89,107,.22);
+}
+
+.start-btn:active{
+  transform:scale(.94);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.small-note{
+  margin-top:19px;
+
+  font-family:"Quicksand",sans-serif;
+
+  font-size:9px;
+
+  font-weight:500;
+
+  letter-spacing:.3px;
+
+  color:#b3aab5;
+
+  animation:
+    textReveal .8s ease 1.85s both;
+}
+
+
+/* =========================
+   CLICK EFFECT
+========================= */
+
+.click-heart{
+  position:fixed;
+
+  z-index:999;
+
+  pointer-events:none;
+
+  font-size:15px;
+
+  color:#d69ab0;
+
+  animation:heartPop .8s ease forwards;
+}
+
+@keyframes heartPop{
+
+  0%{
+    opacity:0;
+    transform:translateY(5px) scale(.5);
+  }
+
+  30%{
+    opacity:1;
+    transform:translateY(-5px) scale(1.1);
+  }
+
+  100%{
+    opacity:0;
+    transform:translateY(-45px) scale(.8);
+  }
+}
+
+
+/* =========================
+   PAGE EXIT
+========================= */
+
+body.leaving .wrapper{
+  animation:leave .5s ease forwards;
+}
+
+body.leaving .blob,
+body.leaving .sparkle{
+  animation:fadeOut .5s ease forwards;
+}
+
+@keyframes leave{
+
+  to{
+    opacity:0;
+
+    transform:
+      translateY(-15px)
+      scale(.96);
+
+    filter:blur(5px);
+  }
+}
+
+@keyframes fadeOut{
+
+  to{
+    opacity:0;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:360px){
+
+  .card{
+    padding:34px 21px 28px;
+  }
+
+  .icon{
+    width:70px;
+    height:70px;
+
+    font-size:30px;
+  }
+
+  h1{
+    font-size:27px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- OPENING -->
+
+<div class="intro-screen">
+  <div class="intro-dot"></div>
+</div>
+
+
+<!-- BACKGROUND -->
+
+<div class="blob one"></div>
+<div class="blob two"></div>
+<div class="blob three"></div>
+<div class="blob four"></div>
+
+<div class="sparkle s1">✦</div>
+<div class="sparkle s2">♡</div>
+<div class="sparkle s3">✦</div>
+<div class="sparkle s4">·</div>
+
+
+<!-- MAIN -->
+
+<main class="wrapper">
+
+  <section class="card">
+
+    <div class="label">
+      before you go ♡
+    </div>
+
+    <div class="icon">
+      🎮
+    </div>
+
+    <h1>
+      Jangan move dulu...
+    </h1>
+
+    <p class="description">
+      Sebelum lanjut,<br>
+      main mini game lagi, yuk!
+    </p>
+
+    <button
+      type="button"
+      class="start-btn"
+      id="startBtn"
+    >
+      Main dulu ♡
+    </button>
+
+    <div class="small-note">
+      just a little something before we continue
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+
+const startBtn = document.getElementById("startBtn");
+
+/* Button click */
+
+startBtn.addEventListener("click", (e) => {
+
+  /* little heart effect */
+
+  const heart = document.createElement("div");
+
+  heart.className = "click-heart";
+  heart.textContent = "♡";
+
+  heart.style.left = e.clientX + "px";
+  heart.style.top = e.clientY + "px";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 800);
+
+
+  /* page transition */
+
+  document.body.classList.add("leaving");
+
+  setTimeout(() => {
+    window.location.href = "minigame1.html";
+  }, 500);
+
+});
+
+
+/* Tiny sparkle when touching the screen */
+
+document.addEventListener("click", (e) => {
+
+  if(e.target === startBtn) return;
+
+  const sparkle = document.createElement("div");
+
+  sparkle.className = "click-heart";
+  sparkle.textContent = "✦";
+
+  sparkle.style.left = e.clientX + "px";
+  sparkle.style.top = e.clientY + "px";
+
+  document.body.appendChild(sparkle);
+
+  setTimeout(() => {
+    sparkle.remove();
+  }, 800);
+
+});
+
+</script>
+
+</body>
+</html>

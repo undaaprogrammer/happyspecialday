@@ -1,0 +1,329 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Something to Keep</title>  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #fff;
+      color: #222;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    .page {
+      width: min(90%, 480px);
+      margin: auto;
+      padding: 75px 0;
+    }
+
+
+    /* =========================
+       INTRO
+    ========================== */
+
+    .intro {
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+    }
+
+    .small {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #999;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: 23px;
+      font-weight: 300;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      line-height: 1.8;
+      color: #999;
+    }
+
+
+    /* =========================
+       ART
+    ========================== */
+
+    .art-section {
+      margin-top: 42px;
+
+      opacity: 0;
+
+      animation:
+        fadeUp .9s ease .4s forwards;
+    }
+
+    .art-frame {
+      width: 100%;
+
+      border: 1px solid #e2e2e2;
+
+      padding: 12px;
+
+      background: #fff;
+    }
+
+    .art-frame img {
+      display: block;
+
+      width: 100%;
+
+      height: auto;
+
+      max-height: 520px;
+
+      object-fit: contain;
+
+      background: #fafafa;
+    }
+
+
+    /* =========================
+       CAPTION
+    ========================== */
+
+    .caption {
+      margin-top: 18px;
+
+      text-align: center;
+    }
+
+    .caption-title {
+      font-size: 13px;
+
+      font-weight: 300;
+
+      margin-bottom: 7px;
+    }
+
+    .caption-text {
+      font-size: 11px;
+
+      line-height: 1.7;
+
+      color: #999;
+    }
+
+
+    /* =========================
+       LITTLE NOTE
+    ========================== */
+
+    .note {
+      margin-top: 35px;
+
+      padding-top: 25px;
+
+      border-top: 1px solid #eee;
+
+      text-align: center;
+
+      opacity: 0;
+
+      animation:
+        fadeUp .9s ease .8s forwards;
+    }
+
+    .note p {
+      font-size: 11px;
+
+      line-height: 1.8;
+
+      color: #999;
+    }
+
+
+    /* =========================
+       CONTINUE
+    ========================== */
+
+    .continue {
+      text-align: center;
+
+      margin-top: 45px;
+
+      opacity: 0;
+
+      animation:
+        fadeUp 1s ease 1.2s forwards;
+    }
+
+    .continue p {
+      font-size: 11px;
+
+      color: #999;
+
+      margin-bottom: 14px;
+    }
+
+    .continue button {
+      border: none;
+
+      background: transparent;
+
+      border-bottom: 1px solid #222;
+
+      padding: 9px 15px;
+
+      font-family: inherit;
+
+      font-size: 11px;
+
+      font-weight: 300;
+
+      cursor: pointer;
+
+      color: #222;
+
+      transition: .3s ease;
+    }
+
+    .continue button:hover {
+      letter-spacing: 1px;
+    }
+
+
+    /* =========================
+       ANIMATION
+    ========================== */
+
+    @keyframes fadeUp {
+
+      from {
+        opacity: 0;
+
+        transform:
+          translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+
+        transform:
+          translateY(0);
+      }
+
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 400px) {
+
+      .page {
+        padding: 60px 0;
+      }
+
+      h1 {
+        font-size: 21px;
+      }
+
+      .art-frame {
+        padding: 9px;
+      }
+
+    }
+
+  </style></head><body>  <main class="page"><!-- INTRO -->
+
+<section class="intro">
+
+  <div class="small">
+    03 / SOMETHING TO KEEP
+  </div>
+
+  <h1>
+    A little piece<br>
+    of a memory.
+  </h1>
+
+  <p class="subtitle">
+    Some things are better kept<br>
+    than simply remembered.
+  </p>
+
+</section>
+
+
+
+<!-- ART -->
+
+<section class="art-section">
+
+  <div class="art-frame">
+
+    <img
+      src="art.jpg"
+      alt="A little piece of a memory"
+    >
+
+  </div>
+
+
+  <div class="caption">
+
+    <div class="caption-title">
+      Something I made for you.
+    </div>
+
+    <p class="caption-text">
+      Not perfect. Just something<br>
+      I wanted you to have.
+    </p>
+
+  </div>
+
+</section>
+
+
+
+<!-- NOTE -->
+
+<section class="note">
+
+  <p>
+    You can keep this one.
+  </p>
+
+</section>
+
+
+
+<!-- CONTINUE -->
+
+<section class="continue">
+
+  <p>
+    When you're ready...
+  </p>
+
+  <button onclick="goNext()">
+    Continue →
+  </button>
+
+</section>
+
+  </main>  <script>
+
+    function goNext() {
+      window.location.href = "page8.html";
+    }
+
+  </script></body>
+</html>

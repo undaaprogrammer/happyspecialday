@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warm Up</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: #000;
+  color: white;
+  font-family: "Courier New", monospace;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+
+  transition:
+    background 2.5s ease,
+    color 1.5s ease;
+}
+
+/* =========================
+   SIMPLE DARK → LIGHT
+========================= */
+
+body.light {
+  background: #fff;
+  color: #333;
+}
+
+/* Black screen that slowly disappears */
+.fade-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 10;
+  pointer-events: none;
+
+  opacity: 1;
+  transition: opacity 2.5s ease;
+}
+
+body.light .fade-screen {
+  opacity: 0;
+}
+
+/* =========================
+   SMALL SCANLINES
+========================= */
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 4px,
+      rgba(255,255,255,0.04) 5px
+    );
+
+  opacity: .25;
+
+  transition: opacity 1.5s ease;
+}
+
+body.light .scanlines {
+  opacity: .03;
+}
+
+/* =========================
+   LOADING TEXT
+========================= */
+
+.loading {
+  position: fixed;
+  top: 25px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #777;
+
+  transition: opacity 1s ease;
+
+  z-index: 30;
+}
+
+body.light .loading {
+  opacity: 0;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+  width: 90%;
+  max-width: 420px;
+
+  text-align: center;
+
+  opacity: 0;
+  transform: translateY(10px);
+
+  transition:
+    opacity 1.5s ease,
+    transform 1.5s ease;
+
+  position: relative;
+  z-index: 5;
+}
+
+body.light .container {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================
+   TEXT
+========================= */
+
+.small {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #777;
+
+  margin-bottom: 15px;
+
+  transition: color 1s ease;
+}
+
+body.light .small {
+  color: #b08fa1;
+}
+
+h1 {
+  font-family: Arial, sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+
+  margin-bottom: 10px;
+
+  transition: color 1s ease;
+}
+
+body.light h1 {
+  color: #4b4350;
+}
+
+.instruction {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+
+  color: #aaa;
+
+  margin-bottom: 25px;
+
+  transition: color 1s ease;
+}
+
+body.light .instruction {
+  color: #8e8290;
+}
+
+/* =========================
+   GAME
+========================= */
+
+.game {
+  width: 330px;
+  max-width: 100%;
+
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+  aspect-ratio: 1;
+
+  border: 1px solid #333;
+  border-radius: 15px;
+
+  background: #080808;
+
+  cursor: pointer;
+
+  perspective: 600px;
+
+  transition:
+    transform .2s ease,
+    border-color .7s ease,
+    background .7s ease;
+}
+
+body.light .card {
+  background: #fafafa;
+  border-color: #eadfe8;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+/* Inner */
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+
+  position: relative;
+
+  transition: transform .4s ease;
+
+  transform-style: preserve-3d;
+}
+
+.card.open .card-inner,
+.card.matched .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Front + Back */
+
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 14px;
+
+  backface-visibility: hidden;
+}
+
+/* Front */
+
+.card-front {
+  background: #080808;
+  color: #777;
+
+  font-size: 22px;
+}
+
+body.light .card-front {
+  background: #fff;
+  color: #d0c3cc;
+}
+
+/* Back */
+
+.card-back {
+  transform: rotateY(180deg);
+
+  background: #050505;
+  border: 1px solid #666;
+
+  font-size: 30px;
+}
+
+body.light .card-back {
+  background: #fff;
+  border-color: #ead8e5;
+}
+
+/* Pastel symbol colors */
+
+.card[data-symbol="heart"] .card-back {
+  color: #f39ab5;
+}
+
+.card[data-symbol="star"] .card-back {
+  color: #ad9be8;
+}
+
+.card[data-symbol="moon"] .card-back {
+  color: #83c9df;
+}
+
+/* Matched */
+
+.card.matched {
+  border-color: #cce6d1;
+}
+
+.card.matched .card-back {
+  background: #f9fff9;
+}
+
+/* Wrong */
+
+.card.wrong {
+  animation: shake .25s ease;
+}
+
+@keyframes shake {
+  0%,100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message {
+  margin-top: 20px;
+
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+
+  color: #aaa;
+
+  transition: color 1s ease;
+}
+
+body.light .message {
+  color: #88778a;
+}
+
+/* =========================
+   MOVES
+========================= */
+
+.moves {
+  margin-top: 12px;
+
+  font-size: 9px;
+  letter-spacing: 2px;
+
+  color: #666;
+
+  transition: color 1s ease;
+}
+
+body.light .moves {
+  color: #b29cac;
+}
+
+/* =========================
+   CONTINUE
+========================= */
+
+.continue {
+  display: none;
+
+  margin: 20px auto 0;
+
+  padding: 11px 22px;
+
+  border: none;
+  border-radius: 20px;
+
+  background: #f4b1c5;
+  color: white;
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    background .3s ease;
+}
+
+.continue.show {
+  display: block;
+}
+
+.continue:hover {
+  transform: translateY(-2px);
+  background: #dca3c2;
+}
+
+/* =========================
+   SIMPLE ORNAMENTS
+========================= */
+
+.decor {
+  position: fixed;
+
+  opacity: 0;
+
+  font-family: Arial, sans-serif;
+
+  pointer-events: none;
+
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s ease;
+
+  transform: scale(.7);
+
+  z-index: 2;
+}
+
+body.light .decor {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Positions */
+
+.star1 {
+  top: 10%;
+  left: 12%;
+
+  color: #f4a9c1;
+  font-size: 22px;
+
+  transition-delay: .3s;
+}
+
+.star2 {
+  top: 17%;
+  right: 12%;
+
+  color: #b6a5e8;
+  font-size: 18px;
+
+  transition-delay: .5s;
+}
+
+.heart1 {
+  bottom: 14%;
+  left: 11%;
+
+  color: #8ed1df;
+  font-size: 23px;
+
+  transition-delay: .7s;
+}
+
+.heart2 {
+  bottom: 12%;
+  right: 12%;
+
+  color: #f2c77d;
+  font-size: 19px;
+
+  transition-delay: .9s;
+}
+
+.flower1 {
+  top: 30%;
+  left: 6%;
+
+  color: #c2a9e8;
+  font-size: 15px;
+
+  transition-delay: 1s;
+}
+
+.flower2 {
+  bottom: 29%;
+  right: 6%;
+
+  color: #efa9c2;
+  font-size: 16px;
+
+  transition-delay: 1.1s;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 500px) {
+
+  .game {
+    width: 300px;
+    gap: 10px;
+  }
+
+  .star1 {
+    left: 7%;
+  }
+
+  .star2 {
+    right: 7%;
+  }
+
+  .heart1 {
+    left: 7%;
+  }
+
+  .heart2 {
+    right: 7%;
+  }
+
+  .flower1 {
+    left: 4%;
+  }
+
+  .flower2 {
+    right: 4%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Simple transition -->
+<div class="fade-screen"></div>
+
+<!-- Very light scanlines -->
+<div class="scanlines"></div>
+
+<!-- Loading text -->
+<div class="loading">
+  SYSTEM TRANSITION...
+</div>
+
+<!-- Simple pastel decorations -->
+<div class="decor star1">✦</div>
+<div class="decor star2">✧</div>
+
+<div class="decor heart1">♡</div>
+<div class="decor heart2">♡</div>
+
+<div class="decor flower1">✿</div>
+<div class="decor flower2">✿</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+  <div class="small">
+    01 / WARM UP
+  </div>
+
+  <h1>
+    Let's play a little game.
+  </h1>
+
+  <div class="instruction">
+    Find all the matching pairs.<br>
+    Open two cards at a time.
+  </div>
+
+
+  <!-- GAME -->
+
+  <div class="game" id="game">
+
+    <div class="card" data-symbol="heart">
+      <div class="card-inner">
+        <div class="card-front">?</div>
+        <div class="card-back">♡</div>
+      </div>
+    </div>
+
+    <div class="card" data-symbol="star">
+      <div class="card-inner">
+        <div class="card-front">?</div>
+        <div class="card-back">✦</div>
+      </div>
+    </div>
+
+    <div class="card" data-symbol="moon">
+      <div class="card-inner">
+        <div class="card-front">?</div>
+        <div class="card-back">☾</div>
+      </div>
+    </div>
+
+    <div class="card" data-symbol="heart">
+      <div class="card-inner">
+        <div class="card-front">?</div>
+        <div class="card-back">♡</div>
+      </div>
+    </div>
+
+    <div class="card" data-symbol="star">
+      <div class="card-inner">
+        <div class="card-front">?</div>
+        <div class="card-back">✦</div>
+      </div>
+    </div>
+
+    <div class="card" data-symbol="moon">
+      <div class="card-inner">
+        <div class="card-front">?</div>
+        <div class="card-back">☾</div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- MESSAGE -->
+
+  <div class="message" id="message">
+    Play a lil fun game:)
+  </div>
+
+
+  <!-- CONTINUE -->
+
+  <button class="continue" id="continueBtn">
+    Continue →
+  </button>
+
+
+  <!-- COUNTER -->
+
+  <div class="moves" id="moves">
+    0 / 3 PAIRS FOUND
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   DARK → WHITE TRANSITION
+========================= */
+
+setTimeout(() => {
+  document.body.classList.add("light");
+}, 1000);
+
+
+/* =========================
+   GAME
+========================= */
+
+const cards = document.querySelectorAll(".card");
+const game = document.getElementById("game");
+
+const message = document.getElementById("message");
+const movesText = document.getElementById("moves");
+const continueBtn = document.getElementById("continueBtn");
+
+let firstCard = null;
+let secondCard = null;
+
+let locked = false;
+let pairsFound = 0;
+
+
+/* =========================
+   SHUFFLE
+========================= */
+
+const shuffledCards = [...cards]
+  .sort(() => Math.random() - 0.5);
+
+shuffledCards.forEach(card => {
+  game.appendChild(card);
+});
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function changeMessage(text) {
+  message.textContent = text;
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetCards() {
+
+  firstCard = null;
+  secondCard = null;
+
+  locked = false;
+}
+
+
+/* =========================
+   CARD CLICK
+========================= */
+
+cards.forEach(card => {
+
+  card.addEventListener("click", () => {
+
+    if (locked) return;
+
+    if (
+      card.classList.contains("open") ||
+      card.classList.contains("matched")
+    ) {
+      return;
+    }
+
+
+    /* Open card */
+
+    card.classList.add("open");
+
+
+    /* First card */
+
+    if (!firstCard) {
+
+      firstCard = card;
+
+      changeMessage("Now find its match...");
+
+      return;
+    }
+
+
+    /* Second card */
+
+    secondCard = card;
+
+    locked = true;
+
+
+    const firstSymbol =
+      firstCard.dataset.symbol;
+
+    const secondSymbol =
+      secondCard.dataset.symbol;
+
+
+    /* =====================
+       MATCH
+    ===================== */
+
+    if (firstSymbol === secondSymbol) {
+
+      firstCard.classList.add("matched");
+      secondCard.classList.add("matched");
+
+      pairsFound++;
+
+      movesText.textContent =
+        pairsFound + " / 3 PAIRS FOUND";
+
+      changeMessage(
+        "Nice! You found a pair ♡"
+      );
+
+
+      resetCards();
+
+
+      /* Finished */
+
+      if (pairsFound === 3) {
+
+        setTimeout(() => {
+
+          changeMessage(
+            "You found them all. Looks like you're ready ✦"
+          );
+
+          continueBtn.classList.add("show");
+
+        }, 500);
+      }
+
+    }
+
+
+    /* =====================
+       NOT MATCH
+    ===================== */
+
+    else {
+
+      changeMessage(
+        "Hmm... not a match. Try again."
+      );
+
+      firstCard.classList.add("wrong");
+      secondCard.classList.add("wrong");
+
+
+      setTimeout(() => {
+
+        firstCard.classList.remove(
+          "open",
+          "wrong"
+        );
+
+        secondCard.classList.remove(
+          "open",
+          "wrong"
+        );
+
+        resetCards();
+
+        changeMessage(
+          "Keep looking :)"
+        );
+
+      }, 700);
+    }
+
+  });
+
+});
+
+
+/* =========================
+   CONTINUE
+========================= */
+
+continueBtn.addEventListener("click", () => {
+
+  window.location.href = "page5.html";
+
+});
+
+</script>
+
+</body>
+</html>

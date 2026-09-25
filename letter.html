@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Letter For You ♡</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  min-height:100%;
+  font-family:"Helvetica Neue",Arial,sans-serif;
+  font-weight:300;
+  background:#fff;
+  color:#4b4350;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+/* =========================
+   DECORATIONS
+========================= */
+
+.decor{
+  position:fixed;
+  pointer-events:none;
+  z-index:0;
+  font-size:20px;
+  animation:float 5s ease-in-out infinite;
+}
+
+.decor.one{
+  top:9%;
+  left:8%;
+  color:#f3a8bf;
+}
+
+.decor.two{
+  top:17%;
+  right:10%;
+  color:#b7a6e8;
+  animation-delay:1s;
+}
+
+.decor.three{
+  top:42%;
+  left:5%;
+  color:#8ecddd;
+  font-size:17px;
+  animation-delay:2s;
+}
+
+.decor.four{
+  top:58%;
+  right:7%;
+  color:#efc77e;
+  animation-delay:.7s;
+}
+
+.decor.five{
+  bottom:19%;
+  left:9%;
+  color:#c0a8e5;
+  font-size:16px;
+  animation-delay:1.5s;
+}
+
+.decor.six{
+  bottom:12%;
+  right:11%;
+  color:#efa9c0;
+  font-size:18px;
+  animation-delay:2.5s;
+}
+
+.decor.seven{
+  top:72%;
+  left:18%;
+  color:#f0c980;
+  font-size:14px;
+  animation-delay:1.2s;
+}
+
+.decor.eight{
+  top:30%;
+  right:18%;
+  color:#9ed6df;
+  font-size:14px;
+  animation-delay:3s;
+}
+
+
+/* =========================
+   MAIN PAGE
+========================= */
+
+.page{
+  position:relative;
+  z-index:1;
+  width:min(90%,480px);
+  margin:auto;
+  padding:70px 0 90px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  text-align:center;
+  animation:fadeUp .9s ease both;
+}
+
+.eyebrow{
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#b08fa1;
+  margin-bottom:17px;
+}
+
+.header h1{
+  font-size:25px;
+  line-height:1.35;
+  font-weight:300;
+  color:#514953;
+  margin-bottom:14px;
+}
+
+.header p{
+  font-size:13px;
+  line-height:1.8;
+  color:#968b98;
+  max-width:330px;
+  margin:auto;
+}
+
+
+/* =========================
+   ENVELOPE AREA
+========================= */
+
+.envelope-wrap{
+  margin:55px auto 0;
+  width:280px;
+  text-align:center;
+  animation:fadeUp 1s ease .2s both;
+}
+
+.envelope{
+  position:relative;
+  width:280px;
+  height:185px;
+  margin:auto;
+  cursor:pointer;
+  perspective:900px;
+  filter:drop-shadow(0 18px 25px rgba(214,155,180,.18));
+}
+
+
+/* Envelope body */
+
+.envelope-body{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  border-radius:4px;
+  background:
+    linear-gradient(
+      135deg,
+      #f2b6ca 0%,
+      #e9abc1 50%,
+      #dc98b2 100%
+    );
+  border:1px solid #e0a4ba;
+}
+
+
+/* Bottom folds */
+
+.envelope-body::before{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:125px;
+  background:
+    linear-gradient(
+      145deg,
+      transparent 49.5%,
+      #d792ad 50%
+    );
+  z-index:2;
+}
+
+.envelope-body::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:125px;
+  background:
+    linear-gradient(
+      215deg,
+      transparent 49.5%,
+      #d58faa 50%
+    );
+  z-index:2;
+}
+
+
+/* Inner paper */
+
+.envelope-inner{
+  position:absolute;
+  left:15px;
+  right:15px;
+  bottom:12px;
+  height:135px;
+  background:
+    linear-gradient(
+      135deg,
+      #f9dce7,
+      #f2c4d4
+    );
+  z-index:1;
+}
+
+
+/* Flap */
+
+.flap{
+  position:absolute;
+  top:0;
+  left:0;
+  width:0;
+  height:0;
+  border-left:140px solid transparent;
+  border-right:140px solid transparent;
+  border-top:95px solid #f6c4d5;
+  transform-origin:top center;
+  z-index:5;
+  filter:drop-shadow(0 2px 1px rgba(194,120,151,.15));
+  transition:
+    transform .8s cubic-bezier(.2,.75,.25,1),
+    z-index .1s linear .35s;
+}
+
+
+/* Flap inner shadow */
+
+.flap::after{
+  content:"";
+  position:absolute;
+  left:-140px;
+  top:-95px;
+  width:280px;
+  height:95px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.18),
+      transparent 65%
+    );
+}
+
+
+/* Heart */
+
+.envelope-heart{
+  position:absolute;
+  z-index:6;
+  top:70px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:23px;
+  color:rgba(255,255,255,.82);
+  transition:
+    opacity .3s ease,
+    transform .4s ease;
+}
+
+
+/* Open state */
+
+.envelope.open .flap{
+  transform:rotateX(180deg);
+  z-index:0;
+}
+
+.envelope.open .envelope-heart{
+  opacity:0;
+  transform:
+    translateX(-50%)
+    translateY(-8px)
+    scale(.7);
+}
+
+
+/* Envelope hint */
+
+.envelope-hint{
+  margin-top:19px;
+  font-size:10px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:#b08fa1;
+  transition:opacity .3s ease;
+}
+
+.envelope.open + .envelope-hint{
+  opacity:0;
+}
+
+
+/* =========================
+   LETTER PAPER
+========================= */
+
+.letter{
+  position:relative;
+  margin:0 auto;
+  width:100%;
+  padding:34px 28px 38px;
+  background:
+    linear-gradient(
+      135deg,
+      #fffafd 0%,
+      #fff6f9 55%,
+      #f9e8ef 100%
+    );
+  border:1px solid #ead5df;
+  border-radius:4px;
+  box-shadow:
+    0 18px 45px rgba(197,139,164,.14),
+    0 3px 10px rgba(197,139,164,.08);
+  opacity:0;
+  transform:
+    translateY(-35px)
+    scale(.97);
+  pointer-events:none;
+  transition:
+    opacity .8s ease,
+    transform .9s cubic-bezier(.2,.75,.25,1);
+}
+
+
+/* Letter visible */
+
+.letter.show{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  pointer-events:auto;
+}
+
+
+/* Paper details */
+
+.paper-label{
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:#b08fa1;
+  margin-bottom:23px;
+}
+
+.letter h2{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:23px;
+  font-weight:400;
+  color:#66505d;
+  line-height:1.45;
+  margin-bottom:23px;
+}
+
+.letter-content{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:14px;
+  line-height:1.95;
+  color:#514953;
+}
+
+.letter-content p{
+  margin-bottom:18px;
+}
+
+.letter-content p:last-child{
+  margin-bottom:0;
+}
+
+
+/* Divider */
+
+.divider{
+  width:45px;
+  height:1px;
+  background:#d6a9bc;
+  margin:27px 0;
+}
+
+
+/* Signature */
+
+.signature{
+  margin-top:27px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:15px;
+  line-height:1.8;
+  color:#8f6578;
+}
+
+.signature span{
+  font-style:italic;
+}
+
+
+/* =========================
+   CONTINUE BUTTON
+========================= */
+
+.continue{
+  display:flex;
+  justify-content:center;
+  margin-top:30px;
+  opacity:0;
+  transform:translateY(10px);
+  pointer-events:none;
+  transition:
+    opacity .6s ease,
+    transform .6s ease;
+}
+
+.continue.show{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+
+.continue a{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:13px 22px;
+  border:1px solid #dcb5c7;
+  border-radius:30px;
+  background:#fff7fa;
+  color:#8f6578;
+  text-decoration:none;
+  font-size:10px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  transition:
+    background .25s ease,
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.continue a:hover{
+  background:#fff0f5;
+  transform:translateY(-2px);
+  box-shadow:0 8px 18px rgba(211,155,180,.15);
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@keyframes float{
+  0%,100%{
+    transform:translateY(0) rotate(0deg);
+  }
+
+  50%{
+    transform:translateY(-8px) rotate(3deg);
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:400px){
+
+  .page{
+    width:88%;
+    padding-top:60px;
+  }
+
+  .header h1{
+    font-size:23px;
+  }
+
+  .header p{
+    font-size:12px;
+  }
+
+  .envelope-wrap{
+    width:250px;
+  }
+
+  .envelope{
+    width:250px;
+    height:165px;
+  }
+
+  .flap{
+    border-left-width:125px;
+    border-right-width:125px;
+    border-top-width:85px;
+  }
+
+  .flap::after{
+    left:-125px;
+    top:-85px;
+    width:250px;
+    height:85px;
+  }
+
+  .letter{
+    padding:30px 22px 34px;
+  }
+
+  .letter h2{
+    font-size:21px;
+  }
+
+  .letter-content{
+    font-size:13px;
+  }
+
+  .decor{
+    font-size:15px;
+  }
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- Pastel decorations -->
+<div class="decor one">✦</div>
+<div class="decor two">✧</div>
+<div class="decor three">♡</div>
+<div class="decor four">♡</div>
+<div class="decor five">✿</div>
+<div class="decor six">✿</div>
+<div class="decor seven">✦</div>
+<div class="decor eight">✧</div>
+
+
+<main class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+
+    <div class="eyebrow">
+      04 / SOMETHING TO READ
+    </div>
+
+    <h1>
+      Perhaps the most personal one of them all.
+    </h1>
+
+    <p>
+      Some words are better written than simply said.
+    </p>
+
+  </header>
+
+
+  <!-- ENVELOPE -->
+  <section class="envelope-wrap">
+
+    <div class="envelope" id="envelope">
+
+      <div class="envelope-body"></div>
+
+      <div class="envelope-inner"></div>
+
+      <div class="flap"></div>
+
+      <div class="envelope-heart">
+        ♡
+      </div>
+
+    </div>
+
+    <div class="envelope-hint">
+      tap the envelope ♡
+    </div>
+
+  </section>
+
+
+  <!-- LETTER -->
+  <article class="letter" id="letter">
+
+    <div class="paper-label">
+      A little letter
+    </div>
+
+    <h2>
+      Selamat ulang tahun,
+      orang yang makin bertambah umur!
+    </h2>
+
+    <div class="letter-content">
+
+      <p>
+        Sehat dan sukses selalu.
+        Amanah menjadi khalifah di muka bumi ini.
+        Semoga semakin banyak hal baik yang tumbuh
+        di dalam hidupmu.
+      </p>
+
+      <p>
+        Doa klasik, terucap setiap tahun,
+        tapi bermakna, kan?
+      </p>
+
+      <p>
+        Lebih banyak tawa daripada luka,
+        lebih banyak temu daripada kehilangan,
+        dan lebih banyak alasan untuk pulang
+        kepada bahagia.
+      </p>
+
+      <div class="divider"></div>
+
+      <p>
+        Jujur, aku bingung harus mulai dari mana.
+        Rasanya ada banyak hal yang ingin ditulis,
+        tapi kalau semuanya ditulis mungkin surat ini
+        malah jadi terlalu panjang.
+      </p>
+
+      <p>
+        Jadi, mungkin cukup dengan satu hal:
+        semoga di umur yang baru ini kamu bisa
+        menemukan lebih banyak hal yang membuatmu
+        bersyukur dan bahagia.
+      </p>
+
+      <p>
+        Semoga setiap langkah yang kamu ambil
+        membawa kamu semakin dekat dengan
+        hal-hal baik yang selama ini kamu harapkan.
+      </p>
+
+      <p>
+        Dan kalau suatu hari semuanya terasa
+        sedikit melelahkan, semoga kamu tetap
+        punya alasan untuk berhenti sebentar,
+        bernapas, lalu melanjutkan perjalananmu lagi.
+      </p>
+
+      <p>
+        Ok, aku minta kamu buat mengerti.
+        Di usia remaja ini, aku ga bisa menjalin
+        hubungan secara intens seperti dalam
+        tanda kutip pacaran.
+        Tapi aku terbuka sekali untuk bisa jadi
+        bestie anda. Serius!
+      </p>
+
+    </div>
+
+
+    <div class="signature">
+      From someone who wishes you well,<br>
+      <span>Ayunda ♡</span>
+    </div>
+
+  </article>
+
+
+  <!-- CONTINUE -->
+  <div class="continue" id="continueBtn">
+
+    <a href="minigames.html">
+      Continue
+      <span>→</span>
+    </a>
+
+  </div>
+
+</main>
+
+
+<script>
+
+const envelope = document.getElementById("envelope");
+const letter = document.getElementById("letter");
+const continueBtn = document.getElementById("continueBtn");
+
+let opened = false;
+
+envelope.addEventListener("click", () => {
+
+  if(opened) return;
+
+  opened = true;
+
+  envelope.classList.add("open");
+
+  setTimeout(() => {
+
+    letter.classList.add("show");
+
+    setTimeout(() => {
+      continueBtn.classList.add("show");
+    }, 700);
+
+  }, 650);
+
+});
+
+</script>
+
+</body>
+</html>

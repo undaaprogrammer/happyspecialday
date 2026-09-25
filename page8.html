@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>The Journey</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-weight: 300;
+      background: #fff;
+      color: #4b4350;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    /* =========================
+       FLOATING PASTEL DECOR
+    ========================= */
+
+    .decor {
+      position: fixed;
+      z-index: 0;
+      pointer-events: none;
+      font-size: 20px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .d1 {
+      top: 10%;
+      left: 9%;
+      color: #efa9c0;
+    }
+
+    .d2 {
+      top: 20%;
+      right: 10%;
+      color: #b7a6e8;
+      animation-delay: 1s;
+    }
+
+    .d3 {
+      bottom: 18%;
+      left: 12%;
+      color: #8ecddd;
+      animation-delay: 2s;
+    }
+
+    .d4 {
+      bottom: 10%;
+      right: 12%;
+      color: #efc77e;
+      animation-delay: .5s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    /* =========================
+       PAGE
+    ========================= */
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: 90%;
+      max-width: 420px;
+      margin: auto;
+      padding: 55px 0 40px;
+    }
+
+    /* =========================
+       INTRO
+    ========================= */
+
+    .intro {
+      margin-bottom: 45px;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+    }
+
+    .small {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #b7a6e8;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #594e59;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      line-height: 1.8;
+      color: #9b919b;
+    }
+
+    /* =========================
+       TIMELINE
+    ========================= */
+
+    .timeline {
+      position: relative;
+      padding-left: 42px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: #eadfe7;
+    }
+
+    .item {
+      position: relative;
+      margin-bottom: 27px;
+      opacity: 0;
+      animation: fadeUp .8s ease forwards;
+    }
+
+    .item:nth-child(1) {
+      animation-delay: .4s;
+    }
+
+    .item:nth-child(2) {
+      animation-delay: .7s;
+    }
+
+    .item:nth-child(3) {
+      animation-delay: 1s;
+    }
+
+    .item:nth-child(4) {
+      animation-delay: 1.3s;
+    }
+
+    /* =========================
+       DOT
+    ========================= */
+
+    .dot {
+      position: absolute;
+      left: -38px;
+      top: 18px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #fff;
+      z-index: 2;
+      transition: .3s ease;
+    }
+
+    /* Completed */
+
+    .completed .dot {
+      border: 1px solid #d9a8bb;
+      box-shadow: 0 0 0 4px rgba(217, 168, 187, .08);
+    }
+
+    .completed .dot::after {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #d9a8bb;
+      left: 4px;
+      top: 4px;
+    }
+
+    /* Unlocked */
+
+    .unlocked .dot {
+      border: 1px solid #a58ebd;
+      box-shadow: 0 0 0 4px rgba(165, 142, 189, .08);
+    }
+
+    .unlocked .dot::after {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #a58ebd;
+      left: 4px;
+      top: 4px;
+    }
+
+    /* =========================
+       CARD
+    ========================= */
+
+    .card {
+      position: relative;
+      border: 1px solid #eadfe7;
+      border-radius: 16px;
+      background: #fff;
+      padding: 19px 20px;
+      box-shadow: 0 7px 22px rgba(180, 150, 180, .07);
+      transition: .3s ease;
+      overflow: hidden;
+    }
+
+    /* Tiny pastel accent */
+
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      right: -28px;
+      top: -28px;
+      opacity: .14;
+    }
+
+    /* Completed */
+
+    .completed .card {
+      background: #fcfafc;
+      border-color: #eee6ed;
+      cursor: default;
+    }
+
+    .completed .card::after {
+      background: #d9a8bb;
+    }
+
+    .completed .card:hover {
+      border-color: #eee6ed;
+      transform: none;
+    }
+
+    .completed .title {
+      color: #777;
+    }
+
+    .completed .description {
+      color: #b5b5b5;
+    }
+
+    .completed .number {
+      color: #d9a8bb;
+    }
+
+    .completed .status {
+      color: #d09aae;
+    }
+
+    /* Unlocked */
+
+    .unlocked .card {
+      cursor: pointer;
+      border-color: #e4dbea;
+    }
+
+    .unlocked .card::after {
+      background: #b7a6e8;
+    }
+
+    .unlocked .card:hover {
+      border-color: #cbb9d5;
+      transform: translateX(4px);
+      box-shadow: 0 9px 25px rgba(165, 142, 189, .12);
+    }
+
+    /* =========================
+       TEXT
+    ========================= */
+
+    .number {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #b7a6e8;
+      margin-bottom: 8px;
+    }
+
+    .title {
+      font-size: 15px;
+      font-weight: 400;
+      color: #514752;
+      margin-bottom: 7px;
+    }
+
+    .description {
+      font-size: 11px;
+      line-height: 1.7;
+      color: #9b919b;
+    }
+
+    .status {
+      margin-top: 13px;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .unlocked .status {
+      color: #a58ebd;
+    }
+
+    /* =========================
+       CONTINUE
+    ========================= */
+
+    .continue {
+      text-align: center;
+      margin-top: 35px;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.8s forwards;
+    }
+
+    .continue p {
+      font-size: 11px;
+      color: #9b919b;
+      margin-bottom: 14px;
+    }
+
+    .continue button {
+      border: 1px solid #dfd1dc;
+      border-radius: 20px;
+      background: #fff;
+      padding: 10px 19px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 300;
+      color: #756975;
+      cursor: pointer;
+      transition: .3s ease;
+    }
+
+    .continue button:hover {
+      background: #faf5f8;
+      border-color: #d9a8bb;
+      color: #a58ebd;
+      transform: translateY(-2px);
+    }
+
+    /* =========================
+       ANIMATION
+    ========================= */
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 400px) {
+
+      .page {
+        padding-top: 40px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .timeline {
+        padding-left: 37px;
+      }
+
+      .timeline::before {
+        left: 8px;
+      }
+
+      .dot {
+        left: -34px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PASTEL DECOR -->
+
+  <div class="decor d1">✦</div>
+  <div class="decor d2">♡</div>
+  <div class="decor d3">✧</div>
+  <div class="decor d4">✿</div>
+
+
+  <main class="page">
+
+    <section class="intro">
+
+      <div class="small">
+        THE JOURNEY
+      </div>
+
+      <h1>
+        There are a few things<br>
+        waiting for you.
+      </h1>
+
+      <p class="subtitle">
+        Four little stops.<br>
+        One step at a time.
+      </p>
+
+    </section>
+
+
+    <section class="timeline">
+
+
+      <!-- =========================
+           01 — COMPLETED
+      ========================== -->
+
+      <div class="item completed">
+
+        <span class="dot"></span>
+
+        <div class="card">
+
+          <div class="number">
+            01
+          </div>
+
+          <div class="title">
+            Something to Light
+          </div>
+
+          <div class="description">
+            A little light for the beginning of your journey.
+          </div>
+
+          <div class="status">
+            ✓ Completed
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           02 — COMPLETED
+      ========================== -->
+
+      <div class="item completed">
+
+        <span class="dot"></span>
+
+        <div class="card">
+
+          <div class="number">
+            02
+          </div>
+
+          <div class="title">
+            Something to Listen
+          </div>
+
+          <div class="description">
+            A collection of songs waiting somewhere ahead.
+          </div>
+
+          <div class="status">
+            ✓ Completed
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           03 — COMPLETED
+      ========================== -->
+
+      <div class="item completed">
+
+        <span class="dot"></span>
+
+        <div class="card">
+
+          <div class="number">
+            03
+          </div>
+
+          <div class="title">
+            Something to Keep
+          </div>
+
+          <div class="description">
+            Something made from a little piece of a memory.
+          </div>
+
+          <div class="status">
+            ✓ Completed
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           04 — UNLOCKED
+      ========================== -->
+
+      <div class="item unlocked">
+
+        <span class="dot"></span>
+
+        <div
+          class="card"
+          onclick="goTo('letter.html')"
+        >
+
+          <div class="number">
+            04
+          </div>
+
+          <div class="title">
+            Something to Read
+          </div>
+
+          <div class="description">
+            Perhaps the most personal one of them all.
+          </div>
+
+          <div class="status">
+            → Open
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+    <section class="continue">
+
+      <p>
+        Your next stop is waiting.
+      </p>
+
+      <button onclick="goTo('letter.html')">
+        Continue →
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    function goTo(page) {
+      window.location.href = page;
+    }
+
+  </script>
+
+</body>
+
+</html>

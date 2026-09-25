@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Before We Begin</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+
+      background: #fff;
+      color: #111;
+
+      font-family: "Courier New", monospace;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+
+      position: relative;
+    }
+
+
+    /* =================================
+       SUBTLE SCANLINES
+    ================================= */
+
+    body::before {
+      content: "";
+
+      position: fixed;
+      inset: 0;
+
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0px,
+          transparent 4px,
+          rgba(0, 0, 0, 0.025) 5px
+        );
+
+      pointer-events: none;
+
+      z-index: 10;
+    }
+
+
+    /* =================================
+       VERY LIGHT VIGNETTE
+    ================================= */
+
+    body::after {
+      content: "";
+
+      position: fixed;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle,
+          transparent 55%,
+          rgba(0, 0, 0, 0.07) 100%
+        );
+
+      pointer-events: none;
+
+      z-index: 9;
+    }
+
+
+    /* =================================
+       FLOATING PARTICLES
+    ================================= */
+
+    .particles {
+      position: fixed;
+      inset: 0;
+
+      overflow: hidden;
+
+      pointer-events: none;
+
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+
+      width: 2px;
+      height: 2px;
+
+      background: #111;
+
+      opacity: 0;
+
+      animation:
+        floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+
+      0% {
+        transform: translateY(105vh);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 0.18;
+      }
+
+      80% {
+        opacity: 0.08;
+      }
+
+      100% {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+
+    }
+
+
+    /* =================================
+       MAIN CONTAINER
+    ================================= */
+
+    .container {
+      width: 82%;
+      max-width: 560px;
+
+      position: relative;
+
+      z-index: 5;
+    }
+
+
+    /* =================================
+       STATUS
+    ================================= */
+
+    .status {
+      font-size: 9px;
+
+      letter-spacing: 3px;
+
+      color: #888;
+
+      margin-bottom: 25px;
+
+      opacity: 0;
+
+      animation:
+        fadeIn 1s ease forwards;
+
+      animation-delay: 0.3s;
+    }
+
+    .status::before {
+      content: "● ";
+
+      color: #111;
+
+      animation:
+        blink 1s infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      50% {
+        opacity: 1;
+      }
+
+      51%,
+      100% {
+        opacity: 0.2;
+      }
+
+    }
+
+
+    /* =================================
+       QUESTION
+    ================================= */
+
+    #question {
+      font-size: 15px;
+
+      font-weight: normal;
+
+      line-height: 1.9;
+
+      letter-spacing: 0.5px;
+
+      white-space: pre-line;
+
+      min-height: 120px;
+
+      color: #111;
+
+      position: relative;
+    }
+
+
+    /* =================================
+       TYPING CURSOR
+    ================================= */
+
+    #question::after {
+      content: "█";
+
+      display: inline-block;
+
+      margin-left: 3px;
+
+      font-size: 11px;
+
+      color: #111;
+
+      animation:
+        cursorBlink 0.8s steps(1) infinite;
+    }
+
+    #question.typing-done::after {
+      display: none;
+    }
+
+    @keyframes cursorBlink {
+
+      0%,
+      50% {
+        opacity: 1;
+      }
+
+      51%,
+      100% {
+        opacity: 0;
+      }
+
+    }
+
+
+    /* =================================
+       PASSWORD AREA
+    ================================= */
+
+    .password-box {
+      margin-top: 35px;
+
+      opacity: 0;
+
+      transform:
+        translateY(15px);
+
+      pointer-events: none;
+
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+    }
+
+    .password-box.show {
+      opacity: 1;
+
+      transform:
+        translateY(0);
+
+      pointer-events: auto;
+    }
+
+
+    /* =================================
+       SECURITY LABEL
+    ================================= */
+
+    .password-label {
+      font-size: 9px;
+
+      color: #888;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 13px;
+    }
+
+
+    /* =================================
+       PASSWORD ROW
+    ================================= */
+
+    .password-row {
+      display: flex;
+
+      align-items: center;
+
+      gap: 18px;
+    }
+
+
+    /* =================================
+       INPUT
+    ================================= */
+
+    input {
+      width: 190px;
+
+      padding: 9px 4px;
+
+      border: none;
+
+      border-bottom:
+        1px solid #ccc;
+
+      outline: none;
+
+      background: transparent;
+
+      font-family:
+        "Courier New",
+        monospace;
+
+      font-size: 13px;
+
+      color: #111;
+
+      letter-spacing: 4px;
+
+      transition:
+        border-color 0.3s ease,
+        width 0.3s ease;
+    }
+
+    input::placeholder {
+      color: #aaa;
+
+      letter-spacing: 1px;
+    }
+
+    input:focus {
+      border-bottom:
+        1px solid #111;
+
+      width: 210px;
+    }
+
+
+    /* =================================
+       ENTER BUTTON
+    ================================= */
+
+    button {
+      border: 1px solid #ccc;
+
+      background: transparent;
+
+      padding: 9px 14px;
+
+      font-family:
+        "Courier New",
+        monospace;
+
+      font-size: 11px;
+
+      color: #555;
+
+      cursor: pointer;
+
+      transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.1s ease;
+    }
+
+    button:hover {
+      color: #fff;
+
+      background: #111;
+
+      border-color: #111;
+    }
+
+    button:active {
+      transform:
+        scale(0.94);
+    }
+
+
+    /* =================================
+       MESSAGE
+    ================================= */
+
+    #message {
+      margin-top: 18px;
+
+      min-height: 18px;
+
+      font-size: 10px;
+
+      letter-spacing: 1px;
+
+      color: #777;
+
+      opacity: 0;
+
+      transition:
+        opacity 0.3s ease;
+    }
+
+    #message.show {
+      opacity: 1;
+    }
+
+
+    /* =================================
+       KEYBOARD
+    ================================= */
+
+    .keyboard {
+      position: fixed;
+
+      bottom: 35px;
+
+      left: 50%;
+
+      transform:
+        translateX(-50%);
+
+      display: flex;
+
+      gap: 5px;
+
+      opacity: 0.3;
+
+      z-index: 4;
+    }
+
+    .key {
+      width: 24px;
+      height: 24px;
+
+      border:
+        1px solid #bbb;
+
+      background: #fff;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      font-size: 8px;
+
+      color: #888;
+
+      transition:
+        background 0.05s,
+        color 0.05s,
+        transform 0.05s,
+        border-color 0.05s;
+    }
+
+    .key.active {
+      background: #111;
+
+      color: #fff;
+
+      border-color: #111;
+
+      transform:
+        translateY(2px);
+    }
+
+
+    /* =================================
+       GLITCH EFFECT
+    ================================= */
+
+    .glitch {
+      animation:
+        glitch 0.15s linear;
+    }
+
+    @keyframes glitch {
+
+      0% {
+        transform:
+          translate(0);
+      }
+
+      25% {
+        transform:
+          translate(-2px, 1px);
+      }
+
+      50% {
+        transform:
+          translate(2px, -1px);
+      }
+
+      75% {
+        transform:
+          translate(-1px, -1px);
+      }
+
+      100% {
+        transform:
+          translate(0);
+      }
+
+    }
+
+
+    /* =================================
+       ACCESS GRANTED
+    ================================= */
+
+    .access-granted {
+      animation:
+        flash 0.5s ease,
+        glitch 0.2s linear;
+    }
+
+    @keyframes flash {
+
+      0% {
+        opacity: 1;
+      }
+
+      30% {
+        opacity: 0.25;
+      }
+
+      60% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 1;
+      }
+
+    }
+
+
+    /* =================================
+       FADE IN
+    ================================= */
+
+    @keyframes fadeIn {
+
+      to {
+        opacity: 1;
+      }
+
+    }
+
+
+    /* =================================
+       MOBILE
+    ================================= */
+
+    @media (max-width: 600px) {
+
+      .container {
+        width: 82%;
+      }
+
+      #question {
+        font-size: 13px;
+
+        line-height: 1.8;
+      }
+
+      .password-row {
+        gap: 10px;
+      }
+
+      input {
+        width: 150px;
+      }
+
+      input:focus {
+        width: 165px;
+      }
+
+      button {
+        font-size: 10px;
+
+        padding:
+          9px 10px;
+      }
+
+      .keyboard {
+        bottom: 22px;
+
+        gap: 3px;
+      }
+
+      .key {
+        width: 19px;
+        height: 19px;
+
+        font-size: 6px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =================================
+       PARTICLES
+  ================================== -->
+
+  <div
+    class="particles"
+    id="particles">
+  </div>
+
+
+  <!-- =================================
+       MAIN CONTENT
+  ================================== -->
+
+  <div class="container">
+
+
+    <!-- STATUS -->
+
+    <div class="status">
+      SYSTEM ONLINE
+    </div>
+
+
+    <!-- QUESTION -->
+
+    <div id="question"></div>
+
+
+    <!-- PASSWORD -->
+
+    <div
+      class="password-box"
+      id="passwordBox">
+
+
+      <div class="password-label">
+        // SECURITY CHECK
+      </div>
+
+
+      <div class="password-row">
+
+
+        <input
+          type="password"
+          id="passwordInput"
+
+          placeholder="6-DIGIT CODE"
+
+          inputmode="numeric"
+
+          maxlength="6"
+
+          autocomplete="off"
+        >
+
+
+        <button
+          onclick="checkPassword()">
+
+          ENTER →
+
+        </button>
+
+
+      </div>
+
+
+      <div id="message"></div>
+
+
+    </div>
+
+
+  </div>
+
+
+  <!-- =================================
+       VISUAL KEYBOARD
+  ================================== -->
+
+  <div
+    class="keyboard"
+    id="keyboard">
+
+    <div class="key">Q</div>
+    <div class="key">W</div>
+    <div class="key">E</div>
+    <div class="key">R</div>
+    <div class="key">T</div>
+    <div class="key">Y</div>
+    <div class="key">U</div>
+    <div class="key">I</div>
+    <div class="key">O</div>
+    <div class="key">P</div>
+
+  </div>
+
+
+  <script>
+
+
+    /* =================================
+       TEXT
+    ================================== */
+
+    const text = `Hello,
+Are you ready for our special adventure?
+  If yes? the password is your date of birth, bro!`;
+
+
+    /* =================================
+       ELEMENTS
+    ================================== */
+
+    const question =
+      document.getElementById(
+        "question"
+      );
+
+    const passwordBox =
+      document.getElementById(
+        "passwordBox"
+      );
+
+    const passwordInput =
+      document.getElementById(
+        "passwordInput"
+      );
+
+    const message =
+      document.getElementById(
+        "message"
+      );
+
+    const keyboard =
+      document.getElementById(
+        "keyboard"
+      );
+
+
+    /* =================================
+       PASSWORD
+    ================================== */
+
+    const correctPassword =
+      "041009";
+
+
+    /* =================================
+       TYPEWRITER
+    ================================== */
+
+    let index = 0;
+
+
+    function typeWriter() {
+
+      if (index < text.length) {
+
+
+        const character =
+          text.charAt(index);
+
+
+        question.textContent +=
+          character;
+
+
+        playTypingSound();
+
+
+        animateKeyboard();
+
+
+        index++;
+
+
+        /*
+          Random typing speed
+          supaya terasa natural
+        */
+
+        const delay =
+          character === "\n"
+            ? 350
+            : Math.random() * 45 + 35;
+
+
+        setTimeout(
+          typeWriter,
+          delay
+        );
+
+
+      } else {
+
+
+        question.classList.add(
+          "typing-done"
+        );
+
+
+        setTimeout(() => {
+
+          passwordBox.classList.add(
+            "show"
+          );
+
+          passwordInput.focus();
+
+        }, 700);
+
+      }
+
+    }
+
+
+    /* =================================
+       KEYBOARD ANIMATION
+    ================================== */
+
+    function animateKeyboard() {
+
+      const keys =
+        keyboard.querySelectorAll(
+          ".key"
+        );
+
+
+      const randomKey =
+        keys[
+          Math.floor(
+            Math.random() *
+            keys.length
+          )
+        ];
+
+
+      randomKey.classList.add(
+        "active"
+      );
+
+
+      setTimeout(() => {
+
+        randomKey.classList.remove(
+          "active"
+        );
+
+      }, 80);
+
+    }
+
+
+    /* =================================
+       AUDIO
+    ================================== */
+
+    let audioContext = null;
+
+
+    function enableAudio() {
+
+      if (!audioContext) {
+
+        audioContext =
+          new (
+            window.AudioContext ||
+            window.webkitAudioContext
+          )();
+
+      }
+
+
+      if (
+        audioContext.state ===
+        "suspended"
+      ) {
+
+        audioContext.resume();
+
+      }
+
+    }
+
+
+    /*
+      Browser biasanya memblokir
+      audio sebelum interaksi user.
+    */
+
+    document.addEventListener(
+      "click",
+      enableAudio,
+      { once: true }
+    );
+
+
+    document.addEventListener(
+      "touchstart",
+      enableAudio,
+      { once: true }
+    );
+
+
+    /* =================================
+       TYPING SOUND
+    ================================== */
+
+    function playTypingSound() {
+
+      if (!audioContext) return;
+
+
+      const oscillator =
+        audioContext.createOscillator();
+
+
+      const gain =
+        audioContext.createGain();
+
+
+      oscillator.type =
+        "square";
+
+
+      oscillator.frequency.value =
+        650 +
+        Math.random() * 100;
+
+
+      gain.gain.setValueAtTime(
+        0.018,
+        audioContext.currentTime
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.001,
+
+        audioContext.currentTime +
+        0.035
+      );
+
+
+      oscillator.connect(gain);
+
+      gain.connect(
+        audioContext.destination
+      );
+
+
+      oscillator.start();
+
+
+      oscillator.stop(
+        audioContext.currentTime +
+        0.04
+      );
+
+    }
+
+
+    /* =================================
+       SUCCESS SOUND
+    ================================== */
+
+    function playSuccessSound() {
+
+      if (!audioContext) return;
+
+
+      const frequencies =
+        [520, 660, 780];
+
+
+      frequencies.forEach(
+        (frequency, i) => {
+
+
+          const oscillator =
+            audioContext.createOscillator();
+
+
+          const gain =
+            audioContext.createGain();
+
+
+          oscillator.type =
+            "square";
+
+
+          oscillator.frequency.value =
+            frequency;
+
+
+          const start =
+            audioContext.currentTime +
+            i * 0.08;
+
+
+          gain.gain.setValueAtTime(
+            0.025,
+            start
+          );
+
+
+          gain.gain.exponentialRampToValueAtTime(
+            0.001,
+            start + 0.15
+          );
+
+
+          oscillator.connect(gain);
+
+
+          gain.connect(
+            audioContext.destination
+          );
+
+
+          oscillator.start(start);
+
+
+          oscillator.stop(
+            start + 0.16
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =================================
+       ERROR SOUND
+    ================================== */
+
+    function playErrorSound() {
+
+      if (!audioContext) return;
+
+
+      const oscillator =
+        audioContext.createOscillator();
+
+
+      const gain =
+        audioContext.createGain();
+
+
+      oscillator.type =
+        "square";
+
+
+      oscillator.frequency.value =
+        150;
+
+
+      gain.gain.setValueAtTime(
+        0.025,
+        audioContext.currentTime
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.001,
+
+        audioContext.currentTime +
+        0.15
+      );
+
+
+      oscillator.connect(gain);
+
+
+      gain.connect(
+        audioContext.destination
+      );
+
+
+      oscillator.start();
+
+
+      oscillator.stop(
+        audioContext.currentTime +
+        0.16
+      );
+
+    }
+
+
+    /* =================================
+       CHECK PASSWORD
+    ================================== */
+
+    function checkPassword() {
+
+      enableAudio();
+
+
+      const enteredPassword =
+        passwordInput.value.trim();
+
+
+      /* =============================
+         CORRECT
+      ============================= */
+
+      if (
+        enteredPassword ===
+        correctPassword
+      ) {
+
+
+        message.textContent =
+          "ACCESS GRANTED.";
+
+
+        message.classList.add(
+          "show"
+        );
+
+
+        document.body.classList.add(
+          "access-granted"
+        );
+
+
+        playSuccessSound();
+
+
+        setTimeout(() => {
+
+          window.location.href =
+            "page2.html";
+
+        }, 1000);
+
+
+      }
+
+
+      /* =============================
+         WRONG
+      ============================= */
+
+      else {
+
+
+        message.textContent =
+          "ACCESS DENIED.";
+
+
+        message.classList.add(
+          "show"
+        );
+
+
+        passwordInput.classList.add(
+          "glitch"
+        );
+
+
+        playErrorSound();
+
+
+        passwordInput.value =
+          "";
+
+
+        setTimeout(() => {
+
+          passwordInput.classList.remove(
+            "glitch"
+          );
+
+          message.classList.remove(
+            "show"
+          );
+
+        }, 1500);
+
+      }
+
+    }
+
+
+    /* =================================
+       ONLY ALLOW NUMBERS
+    ================================== */
+
+    passwordInput.addEventListener(
+      "input",
+      function () {
+
+
+        this.value =
+          this.value.replace(
+            /\D/g,
+            ""
+          );
+
+
+        animateKeyboard();
+
+
+        playTypingSound();
+
+      }
+    );
+
+
+    /* =================================
+       PRESS ENTER
+    ================================== */
+
+    passwordInput.addEventListener(
+      "keydown",
+      function (event) {
+
+
+        if (
+          event.key ===
+          "Enter"
+        ) {
+
+          checkPassword();
+
+        }
+
+      }
+    );
+
+
+    /* =================================
+       PARTICLES
+    ================================== */
+
+    function createParticles() {
+
+      const container =
+        document.getElementById(
+          "particles"
+        );
+
+
+      for (
+        let i = 0;
+        i < 25;
+        i++
+      ) {
+
+
+        const particle =
+          document.createElement(
+            "div"
+          );
+
+
+        particle.classList.add(
+          "particle"
+        );
+
+
+        particle.style.left =
+          Math.random() * 100 +
+          "%";
+
+
+        particle.style.animationDuration =
+          5 +
+          Math.random() * 10 +
+          "s";
+
+
+        particle.style.animationDelay =
+          Math.random() * 8 +
+          "s";
+
+
+        container.appendChild(
+          particle
+        );
+
+      }
+
+    }
+
+
+    /* =================================
+       START
+    ================================== */
+
+    createParticles();
+
+
+    setTimeout(
+      typeWriter,
+      1200
+    );
+
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Yay or Nay</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+
+      background: #fff;
+      color: #111;
+
+      font-family: "Courier New", monospace;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+
+      position: relative;
+    }
+
+
+    /* =================================
+       SUBTLE SCANLINES
+    ================================= */
+
+    body::before {
+      content: "";
+
+      position: fixed;
+      inset: 0;
+
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0px,
+          transparent 4px,
+          rgba(0, 0, 0, 0.025) 5px
+        );
+
+      pointer-events: none;
+
+      z-index: 10;
+    }
+
+
+    /* =================================
+       LIGHT VIGNETTE
+    ================================= */
+
+    body::after {
+      content: "";
+
+      position: fixed;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle,
+          transparent 55%,
+          rgba(0, 0, 0, 0.07) 100%
+        );
+
+      pointer-events: none;
+
+      z-index: 9;
+    }
+
+
+    /* =================================
+       PARTICLES
+    ================================= */
+
+    .particles {
+      position: fixed;
+      inset: 0;
+
+      overflow: hidden;
+
+      pointer-events: none;
+
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+
+      width: 2px;
+      height: 2px;
+
+      background: #111;
+
+      opacity: 0;
+
+      animation:
+        floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+
+      0% {
+        transform: translateY(105vh);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 0.18;
+      }
+
+      80% {
+        opacity: 0.08;
+      }
+
+      100% {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+
+    }
+
+
+    /* =================================
+       MAIN CONTAINER
+    ================================= */
+
+    .container {
+      width: 82%;
+      max-width: 560px;
+
+      position: relative;
+
+      z-index: 5;
+    }
+
+
+    /* =================================
+       STATUS
+    ================================= */
+
+    .status {
+      font-size: 9px;
+
+      letter-spacing: 3px;
+
+      color: #888;
+
+      margin-bottom: 25px;
+
+      opacity: 0;
+
+      animation:
+        fadeIn 1s ease forwards;
+
+      animation-delay: 0.3s;
+    }
+
+    .status::before {
+      content: "● ";
+
+      color: #111;
+
+      animation:
+        blink 1s infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      50% {
+        opacity: 1;
+      }
+
+      51%,
+      100% {
+        opacity: 0.2;
+      }
+
+    }
+
+
+    /* =================================
+       QUESTION
+    ================================= */
+
+    .question {
+      font-size: 15px;
+
+      font-weight: normal;
+
+      line-height: 1.9;
+
+      letter-spacing: 0.5px;
+
+      color: #111;
+
+      margin-bottom: 30px;
+
+      min-height: 58px;
+    }
+
+
+    /* =================================
+       BUTTONS
+    ================================= */
+
+    .buttons {
+      display: flex;
+
+      gap: 10px;
+
+      opacity: 0;
+
+      transform:
+        translateY(10px);
+
+      animation:
+        buttonAppear 0.7s ease forwards;
+
+      animation-delay: 0.8s;
+    }
+
+    button {
+      border:
+        1px solid #ccc;
+
+      background: #fff;
+
+      color: #555;
+
+      border-radius: 0;
+
+      padding:
+        9px 18px;
+
+      font-family:
+        "Courier New",
+        monospace;
+
+      font-size: 11px;
+
+      letter-spacing: 0.5px;
+
+      cursor: pointer;
+
+      transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.1s ease;
+    }
+
+    button:hover {
+      background: #111;
+
+      color: #fff;
+
+      border-color: #111;
+    }
+
+    button:active {
+      transform:
+        scale(0.94);
+    }
+
+
+    /* =================================
+       RESPONSE
+    ================================= */
+
+    #response {
+      margin-top: 20px;
+
+      min-height: 18px;
+
+      font-size: 10px;
+
+      letter-spacing: 1px;
+
+      color: #777;
+
+      opacity: 0;
+
+      transition:
+        opacity 0.3s ease;
+    }
+
+    #response.show {
+      opacity: 1;
+    }
+
+
+    /* =================================
+       KEYBOARD
+    ================================= */
+
+    .keyboard {
+      position: fixed;
+
+      bottom: 35px;
+
+      left: 50%;
+
+      transform:
+        translateX(-50%);
+
+      display: flex;
+
+      gap: 5px;
+
+      opacity: 0.3;
+
+      z-index: 4;
+    }
+
+    .key {
+      width: 24px;
+      height: 24px;
+
+      border:
+        1px solid #bbb;
+
+      background: #fff;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      font-size: 8px;
+
+      color: #888;
+
+      transition:
+        background 0.05s,
+        color 0.05s,
+        transform 0.05s,
+        border-color 0.05s;
+    }
+
+    .key.active {
+      background: #111;
+
+      color: #fff;
+
+      border-color: #111;
+
+      transform:
+        translateY(2px);
+    }
+
+
+    /* =================================
+       GLITCH
+    ================================= */
+
+    .glitch {
+      animation:
+        glitch 0.18s linear;
+    }
+
+    @keyframes glitch {
+
+      0% {
+        transform:
+          translate(0);
+      }
+
+      25% {
+        transform:
+          translate(-2px, 1px);
+      }
+
+      50% {
+        transform:
+          translate(2px, -1px);
+      }
+
+      75% {
+        transform:
+          translate(-1px, -1px);
+      }
+
+      100% {
+        transform:
+          translate(0);
+      }
+
+    }
+
+
+    /* =================================
+       FADE / APPEAR
+    ================================= */
+
+    @keyframes fadeIn {
+
+      to {
+        opacity: 1;
+      }
+
+    }
+
+    @keyframes buttonAppear {
+
+      to {
+        opacity: 1;
+
+        transform:
+          translateY(0);
+      }
+
+    }
+
+
+    /* =================================
+       MOBILE
+    ================================= */
+
+    @media (max-width: 600px) {
+
+      .container {
+        width: 82%;
+      }
+
+      .question {
+        font-size: 13px;
+
+        line-height: 1.8;
+      }
+
+      button {
+        font-size: 10px;
+
+        padding:
+          9px 15px;
+      }
+
+      .keyboard {
+        bottom: 22px;
+
+        gap: 3px;
+      }
+
+      .key {
+        width: 19px;
+        height: 19px;
+
+        font-size: 6px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =================================
+       PARTICLES
+  ================================== -->
+
+  <div
+    class="particles"
+    id="particles">
+  </div>
+
+
+  <!-- =================================
+       MAIN
+  ================================== -->
+
+  <div class="container">
+
+
+    <!-- STATUS -->
+
+    <div class="status">
+      SYSTEM ONLINE
+    </div>
+
+
+    <!-- QUESTION -->
+
+    <div class="question">
+      So...<br>
+      Are you ready to begin?
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="buttons">
+
+      <button onclick="yay()">
+        YAY!
+      </button>
+
+      <button onclick="nay()">
+        NAY
+      </button>
+
+    </div>
+
+
+    <!-- RESPONSE -->
+
+    <div id="response"></div>
+
+
+  </div>
+
+
+  <!-- =================================
+       VISUAL KEYBOARD
+  ================================== -->
+
+  <div
+    class="keyboard"
+    id="keyboard">
+
+    <div class="key">Q</div>
+    <div class="key">W</div>
+    <div class="key">E</div>
+    <div class="key">R</div>
+    <div class="key">T</div>
+    <div class="key">Y</div>
+    <div class="key">U</div>
+    <div class="key">I</div>
+    <div class="key">O</div>
+    <div class="key">P</div>
+
+  </div>
+
+
+  <script>
+
+
+    /* =================================
+       ELEMENTS
+    ================================== */
+
+    const response =
+      document.getElementById(
+        "response"
+      );
+
+    const keyboard =
+      document.getElementById(
+        "keyboard"
+      );
+
+
+    /* =================================
+       AUDIO
+    ================================== */
+
+    let audioContext = null;
+
+
+    function enableAudio() {
+
+      if (!audioContext) {
+
+        audioContext =
+          new (
+            window.AudioContext ||
+            window.webkitAudioContext
+          )();
+
+      }
+
+
+      if (
+        audioContext.state ===
+        "suspended"
+      ) {
+
+        audioContext.resume();
+
+      }
+
+    }
+
+
+    document.addEventListener(
+      "click",
+      enableAudio,
+      { once: true }
+    );
+
+
+    document.addEventListener(
+      "touchstart",
+      enableAudio,
+      { once: true }
+    );
+
+
+    /* =================================
+       CLICK SOUND
+    ================================== */
+
+    function playClickSound() {
+
+      if (!audioContext) return;
+
+
+      const oscillator =
+        audioContext.createOscillator();
+
+
+      const gain =
+        audioContext.createGain();
+
+
+      oscillator.type =
+        "square";
+
+
+      oscillator.frequency.value =
+        600 +
+        Math.random() * 100;
+
+
+      gain.gain.setValueAtTime(
+        0.02,
+        audioContext.currentTime
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.001,
+
+        audioContext.currentTime +
+        0.05
+      );
+
+
+      oscillator.connect(gain);
+
+      gain.connect(
+        audioContext.destination
+      );
+
+
+      oscillator.start();
+
+
+      oscillator.stop(
+        audioContext.currentTime +
+        0.05
+      );
+
+    }
+
+
+    /* =================================
+       KEYBOARD ANIMATION
+    ================================== */
+
+    function animateKeyboard() {
+
+      const keys =
+        keyboard.querySelectorAll(
+          ".key"
+        );
+
+
+      const randomKey =
+        keys[
+          Math.floor(
+            Math.random() *
+            keys.length
+          )
+        ];
+
+
+      randomKey.classList.add(
+        "active"
+      );
+
+
+      setTimeout(() => {
+
+        randomKey.classList.remove(
+          "active"
+        );
+
+      }, 90);
+
+    }
+
+
+    /* =================================
+       YAY
+    ================================== */
+
+    function yay() {
+
+      enableAudio();
+
+      playClickSound();
+
+      animateKeyboard();
+
+
+      document.body.classList.add(
+        "glitch"
+      );
+
+
+      setTimeout(() => {
+
+        window.location.href =
+          "page3.html";
+
+      }, 250);
+
+    }
+
+
+    /* =================================
+       NAY
+    ================================== */
+
+    function nay() {
+
+      enableAudio();
+
+      playClickSound();
+
+      animateKeyboard();
+
+
+      response.textContent =
+        "Hmm... maybe next time :)";
+
+
+      response.classList.add(
+        "show"
+      );
+
+
+      response.classList.add(
+        "glitch"
+      );
+
+
+      setTimeout(() => {
+
+        response.classList.remove(
+          "glitch"
+        );
+
+      }, 250);
+
+    }
+
+
+    /* =================================
+       PARTICLES
+    ================================== */
+
+    function createParticles() {
+
+      const container =
+        document.getElementById(
+          "particles"
+        );
+
+
+      for (
+        let i = 0;
+        i < 25;
+        i++
+      ) {
+
+
+        const particle =
+          document.createElement(
+            "div"
+          );
+
+
+        particle.classList.add(
+          "particle"
+        );
+
+
+        particle.style.left =
+          Math.random() * 100 +
+          "%";
+
+
+        particle.style.animationDuration =
+          5 +
+          Math.random() * 10 +
+          "s";
+
+
+        particle.style.animationDelay =
+          Math.random() * 8 +
+          "s";
+
+
+        container.appendChild(
+          particle
+        );
+
+      }
+
+    }
+
+
+    /* =================================
+       START
+    ================================== */
+
+    createParticles();
+
+
+  </script>
+
+</body>
+</html>
